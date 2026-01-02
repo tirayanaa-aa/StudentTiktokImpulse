@@ -1,5 +1,6 @@
 import streamlit as st
 import member_C
+import member_D
 
 # Page configuration
 st.set_page_config(
@@ -17,5 +18,7 @@ page = st.sidebar.radio("Go to page:", ["Main Page", "Member A", "Member B", "Me
 if page == "Main Page":
     st.subheader("Project Overview")
     st.write("This Streamlit dashboard presents a scientific visualization study on students' impulse buying behavior on TikTok Shop.")
+elif page == "Member C":
+    member_C.app()
 elif page == "Member D":
     member_D.app()
