@@ -137,20 +137,22 @@ def app():
         st.warning(f"Missing Likert columns: {missing_cols}")
 
     
-    # 4. RADAR CHART – SL, PP, OIB
-    # =========================
-    st.markdown("### 4️⃣ Comparison of Mean Scores (SL, PP, OIB)")
+   # =========================
+# 4. RADAR CHART – SL, PP, OIB
+# =========================
+st.markdown("### 4️⃣ Comparison of Mean Scores (SL, PP, OIB)")
 
-    # Check if necessary columns exist
-    radar_cols = ['SL_score', 'PP_score', 'OIB_score']
-    missing_cols = [c for c in radar_cols if c not in df.columns]
+# Check if necessary columns exist
+radar_cols = ['SL_score', 'PP_score', 'OIB_score']
+missing_cols = [c for c in radar_cols if c not in df.columns]
 
-    if not missing_cols:
-        import plotly.graph_objects as go
+if not missing_cols:
+    import plotly.graph_objects as go
 
     # Calculate mean values
     sl_mean = df['SL_score'].mean()
     pp_mean = df['PP
+
 
 
     # =========================
