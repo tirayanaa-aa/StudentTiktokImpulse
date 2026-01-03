@@ -4,8 +4,26 @@ import plotly.express as px
 
 def app():
     st.subheader("Impulse Buying Analysis")
-    df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
-    st.write("Your visualizations go here…")
+
+    
+    # ==================================================
+    # SUB-OBJECTIVE & CONTEXT
+    # ==================================================
+    st.markdown("""
+    ## 📌 Sub-Objective 4: Analyze Product Presentation, Lifestyle Factors, and Impulse Buying Behavior
+
+    ### 🎯 Sub-Objective
+    To analyze how product appearance, personal shopping lifestyle, and impulse buying tendencies influence spontaneous purchasing behavior on TikTok Shop.
+
+    ### 🧩 Problem Statement
+    Impulse buying is a significant outcome in social commerce platforms. However, the influence of product presentation and individual shopping lifestyle on impulse buying behavior is not always clearly understood, requiring visual analytics to uncover underlying patterns and relationships.
+
+    ### 📋 Relevant Questionnaire Sections
+    - **Section 7:** Personal Shopping Lifestyle (SL)  
+    - **Section 8:** Product Appearance and Description (PP)  
+    - **Section 9:** Impulse Buying Behavior (OIB)
+    """)
+
     
     # --------------------------------------------------
     # Load dataset
