@@ -1,6 +1,9 @@
 import streamlit as st 
 import streamlit as st 
-import member_D # ✅ import member_D supaya boleh dipanggil
+import Objective1_Aina
+import Objective2_Nurin
+import Objective3_Nadia
+import Objective4_Athirah
 
 # Page configuration
 st.set_page_config(
@@ -17,9 +20,17 @@ page = st.sidebar.radio(
     ["Main Page", "Member A", "Member B", "Member C", "Member D"]
 )
 
-# Load member pages
-if page == "Main Page":
-    st.subheader("Project Overview")
+elif page == "Objective 1 – Aina":
+    Objective1_Aina.app()
+
+elif page == "Objective 2 – Nurin":
+    Objective2_Nurin.app()
+
+elif page == "Objective 3 – Nadia":
+    Objective3_Nadia.app()
+
+elif page == "Objective 4 – Athirah":
+    Objective4_Athirah.app()
     st.write(
     "This Streamlit dashboard presents a scientific visualization study on "
     "students' impulse buying behavior on TikTok Shop."
