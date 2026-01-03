@@ -11,10 +11,10 @@ page = st.sidebar.selectbox(
     "Go to page:",
     [
         "Main Page",
-        "Objective 1 - Aina",
-        "Objective 2 - Member B",
-        "Objective 3 - Member C",
-        "Objective 4 - Member D"
+        "Objective1_Aina",
+        "Objective2_Nurin",
+        "Objective3_Nadia",
+        "Objective4_Athirah"
     ]
 )
 
@@ -22,18 +22,18 @@ if page == "Main Page":
     import main_page
     main_page.app()
 
-elif page == "Objective 1 - Aina":
-    import member_A
-    member_A.app()
+elif page == "Objective1_Aina":
+    import Objective1_Aina
+    Objective1_Aina.app()
 
-elif page == "Objective 2 - Member B":
-    import member_B
-    member_B.app()
+elif page == "Objective2_Nurin":
+    import Objective2_Nurin
+    Objective2_Nurin.app()
 
-elif page == "Objective 3 - Member C":
-    import member_C
-    member_C.app()
+elif page == "Objective3_Nadia":
+    import Objective3_Nadia
+    Objective3_Nadia.app()
 
-elif page == "Objective 4 - Member D":
-    import member_D
-    member_D.app()
+elif page == "Objective4_Athirah":
+    import Objective4_Athirah
+    Objective4_Athirah.app()
