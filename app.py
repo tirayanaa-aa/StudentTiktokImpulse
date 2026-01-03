@@ -31,11 +31,3 @@ elif page == "Objective 3 – Nadia":
 
 elif page == "Objective 4 – Athirah":
     Objective4_Athirah.app()
-    st.write(
-    "This Streamlit dashboard presents a scientific visualization study on "
-    "students' impulse buying behavior on TikTok Shop."
-    )
-elif page == "Member C":
-    member_C.app()
-elif page == "Member D":
-    member_D.app() # ✅ panggil function app() dari member_D
