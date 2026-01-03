@@ -5,6 +5,12 @@ import plotly.express as px
 def app():
     st.subheader("Member D – Impulse Buying Analysis")
 
+       # --------------------------------------------------
+    # Load dataset
+    # --------------------------------------------------
+    df = pd.read_excel("cleaned_dataset.xlsx")
+
+
     # =========================
     # 1. SCATTER PLOT + TREND LINE
     # =========================
