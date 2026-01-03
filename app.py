@@ -1,32 +1,39 @@
-import streamlit as st  
-import Objective1_Aina
-import Objective2_Nurin
-import Objective3_Nadia
-import Objective4_Athirah
+import streamlit as st
 
-# Page configuration
 st.set_page_config(
-    page_title="TikTok Shop Impulse Buying Study",
+    page_title="TikTok Shop Impulse Buying Visualization",
     layout="wide"
 )
 
-st.title("📊 Determinants of Students' Impulse Buying Behavior on TikTok Shop")
-
-# Sidebar for page navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio(
+
+page = st.sidebar.selectbox(
     "Go to page:",
-    ["Main Page", "Member A", "Member B", "Member C", "Member D"]
+    [
+        "Main Page",
+        "Objective 1 - Aina",
+        "Objective 2 - Member B",
+        "Objective 3 - Member C",
+        "Objective 4 - Member D"
+    ]
 )
 
-elif page == "Objective 1 – Aina":
-    Objective1_Aina.app()
+if page == "Main Page":
+    import main_page
+    main_page.app()
 
-elif page == "Objective 2 – Nurin":
-    Objective2_Nurin.app()
+elif page == "Objective 1 - Aina":
+    import member_A
+    member_A.app()
 
-elif page == "Objective 3 – Nadia":
-    Objective3_Nadia.app()
+elif page == "Objective 2 - Member B":
+    import member_B
+    member_B.app()
 
-elif page == "Objective 4 – Athirah":
-    Objective4_Athirah.app()
+elif page == "Objective 3 - Member C":
+    import member_C
+    member_C.app()
+
+elif page == "Objective 4 - Member D":
+    import member_D
+    member_D.app()
