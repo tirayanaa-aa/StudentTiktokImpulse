@@ -136,24 +136,33 @@ def app():
     else:
         st.warning(f"Missing Likert columns: {missing_cols}")
 
-    
-   # =========================
-# 4. RADAR CHART – SL, PP, OIB
-# =========================
-st.markdown("### 4️⃣ Comparison of Mean Scores (SL, PP, OIB)")
-
-# Check if necessary columns exist
-radar_cols = ['SL_score', 'PP_score', 'OIB_score']
-missing_cols = [c for c in radar_cols if c not in df.columns]
-
-if not missing_cols:
-    import plotly.graph_objects as go
-
-    # Calculate mean values
-    sl_mean = df['SL_score'].mean()
-    pp_mean = df['PP
-
-
+    # =========================
+    # 4. MULTI HISTOGRAM – PURCHASE BEHAVIOR
+    # =========================
+    st.markdown("### 4️⃣ Purchase Behaviour Distribution")
+    purchase_cols = ['no_purchase_plan', 'no_purchase_intent', 'impulse_purchase']
+    missing_cols = [c for c in purchase_cols if c not in df.columns]
+    if not missing_cols:
+        purchase_long = df[purchase_cols].melt(
+            var_name='Purchase Type',
+            value_name='Score'
+        )
+        fig4 = px.histogram(
+            purchase_long,
+            x='Score',
+            color='Purchase Type',
+            barmode='overlay',
+            nbins=5,
+            title='Distribution of Purchase Behaviour'
+        )
+        fig4.update_layout(
+            xaxis=dict(tickmode='linear', tick0=1, dtick=1),
+            yaxis_title='Number of Respondents'
+        )
+        st.plotly_chart(fig4, use_container_width=True)
+    else:
+        st.warning(f"Missing purchase columns: {missing_cols}")
+                     
 
     # =========================
     # 5. BOX PLOT – PRODUCT & BRAND FACTORS
