@@ -65,20 +65,86 @@ on TikTok Shop using scientific data visualization techniques.
 st.markdown("---")
 
 # --------------------------------------------------
+# Visualization Strategy
+# --------------------------------------------------
+st.subheader("📈 Visualization Strategy")
+st.write("""
+This project applies **scientific visualization principles** to transform raw survey data
+into meaningful visual insights. Each visualization is carefully selected based on the
+nature of the data and the analytical goal.
+
+The visualizations are designed to:
+- Compare groups (e.g., gender, age, usage)
+- Show distributions and variability (e.g., box plots)
+- Reveal relationships between variables (e.g., scatter plots)
+- Highlight patterns and trends in impulse buying behavior
+""")
+
+st.markdown("""
+**Visualization Techniques Used:**
+- **Bar Charts** – Compare demographic groups and factor importance
+- **Stacked / Grouped Bar Charts** – Compare TikTok Shop usage across demographics
+- **Heatmaps** – Identify correlations between psychological factors
+- **Box Plots** – Analyze response variability and distribution
+- **Scatter Plots** – Examine relationships between trust, motivation, and impulse buying
+- **Radar Charts** – Visualize multi-dimensional trust and motivation constructs
+""")
+
+# --------------------------------------------------
+# Methodology Overview
+# --------------------------------------------------
+st.subheader("🔬 Methodology Overview")
+st.markdown("""
+This project follows a structured data visualization workflow:
+
+1. **Data Collection** – Online questionnaire using Likert-scale items  
+2. **Data Cleaning** – Handling missing values, renaming variables, and data validation  
+3. **Feature Construction** – Creating composite scores for trust, motivation, and impulse buying  
+4. **Visualization Design** – Selecting charts based on data type and analytical goal  
+5. **Interactive Analysis** – Using filters to explore patterns dynamically  
+
+This ensures that insights are **systematic, reproducible, and scientifically grounded**.
+""")
+
+# --------------------------------------------------
 # Dataset Description
 # --------------------------------------------------
 st.subheader("📂 Dataset Description")
-st.write("""
-The dataset consists of survey responses collected from university students
-using Google Forms.
+st.markdown("""
+The dataset was collected through an online questionnaire distributed to university students.
 
-- Data type: Likert-scale questionnaire  
+**Dataset Characteristics:**
 - Respondents: University students  
-- Focus: TikTok Shop shopping experience and behavior  
-- Data preprocessing: Cleaning, renaming, and composite score calculation
+- Scale: 5-point Likert scale (Strongly Disagree – Strongly Agree)  
+- Variables:
+  - Demographics (gender, age, faculty, income)
+  - TikTok Shop usage behavior
+  - Psychological factors (trust, enjoyment, motivation)
+  - Product presentation and impulse buying indicators
+
+**Preprocessing Steps:**
+- Removal of incomplete responses  
+- Standardization of variable naming  
+- Calculation of composite scores for key constructs
 """)
 
 st.markdown("---")
+
+# --------------------------------------------------
+# Expected Insights
+# --------------------------------------------------
+st.subheader("🔍 Expected Insights & Outcomes")
+st.write("""
+Through interactive visualization, this project aims to:
+
+- Identify which demographic groups are more active on TikTok Shop
+- Understand how scarcity and product discovery trigger impulse buying
+- Examine the role of trust and enjoyment in motivating purchases
+- Analyze how product presentation influences unplanned buying behavior
+
+These insights can help explain **why students are prone to impulse buying**
+in social commerce environments like TikTok Shop.
+""")
 
 # --------------------------------------------------
 # Tools & Techniques
@@ -94,21 +160,43 @@ st.markdown("""
 st.markdown("---")
 
 # --------------------------------------------------
-# Navigation Guide
+# Dashboard Structure & Navigation
 # --------------------------------------------------
-st.subheader("🧭 Navigation Guide")
-st.write("""
-Use the **sidebar** to navigate through different sections of the dashboard:
+st.subheader("🧭 Dashboard Structure & Navigation")
+st.markdown("""
+The dashboard is organized by **research sub-objectives**, ensuring clarity and focus:
 
-- **Main Page** – Project overview and objectives  
-- **Member Pages** – Each member focuses on a specific sub-objective  
-  - Member A: Demographic profile & usage  
-  - Member B: Scarcity & product discovery  
-  - Member C: Trust & shopping motivation  
-  - Member D: Product presentation & impulse buying
+- **Main Page**  
+  - Project background, objectives, and methodology  
+
+- **Member A – Demographics & Usage**  
+  - Respondent profile and TikTok Shop usage patterns  
+
+- **Member B – Scarcity & Discovery**  
+  - Impact of limited offers and unexpected product exposure  
+
+- **Member C – Trust & Motivation**  
+  - Psychological drivers of impulse buying  
+
+- **Member D – Presentation & Lifestyle**  
+  - Visual presentation and shopping habits  
+
+📌 Please use the sidebar on the left to explore the analysis pages.
 """)
 
-st.info("📌 Please use the sidebar on the left to explore the analysis pages.")
+# ------------------------------------------------------------
+# Reproducibility & Source Code
+# ------------------------------------------------------------
+st.subheader("📁 Reproducibility & Source Code")
+st.markdown("""
+The complete source code, dataset, and documentation for this project
+are maintained in a GitHub repository.
+
+This ensures:
+- Transparency
+- Reproducibility
+- Proper version control
+""")
 
 # ------------------------------------------------------------
 # Academic Note
