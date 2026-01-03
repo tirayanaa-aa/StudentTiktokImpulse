@@ -1,64 +1,66 @@
 import streamlit as st
 
-# ------------------------------------------------------------
+# --------------------------------------------------
 # Page Configuration
-# ------------------------------------------------------------
+# --------------------------------------------------
 st.set_page_config(
     page_title="TikTok Shop Impulse Buying Visualization",
     layout="wide"
 )
 
-# ------------------------------------------------------------
+# --------------------------------------------------
 # Title
-# ------------------------------------------------------------
+# --------------------------------------------------
 st.title("📊 Determinants of Students’ Impulse Buying Behavior on TikTok Shop")
+
+# --------------------------------------------------
+# Project Overview
+# --------------------------------------------------
+st.subheader("🎯 Project Overview")
+st.write("""
+This project investigates **students’ impulse buying behavior on TikTok Shop** using
+scientific and interactive data visualization techniques.
+
+The study aims to uncover key psychological, marketing, and demographic factors
+that influence unplanned purchasing decisions on social commerce platforms.
+""")
 
 st.markdown("---")
 
-# ------------------------------------------------------------
-# Project Overview
-# ------------------------------------------------------------
-st.header("📌 Project Overview")
-st.write("""
-This project investigates **students’ impulse buying behavior on TikTok Shop** using 
-survey data and **scientific visualization techniques**.  
-
-Impulse buying has become increasingly common on social commerce platforms like TikTok Shop, 
-where entertainment, promotions, and instant purchasing are combined in a single environment.
-Through interactive visualizations, this project aims to uncover patterns, relationships, 
-and insights behind students’ purchasing behavior.
-""")
-
-# ------------------------------------------------------------
+# --------------------------------------------------
 # Problem Statement
-# ------------------------------------------------------------
-st.header("❗ Problem Statement")
+# --------------------------------------------------
+st.subheader("📌 Problem Statement")
 st.write("""
-TikTok Shop has gained rapid popularity among students due to its engaging content, 
-time-limited promotions, and visually appealing product presentations. As a result, 
-many students make **unplanned and impulsive purchases** without careful evaluation.
+TikTok Shop has rapidly gained popularity among students by integrating entertainment,
+product discovery, and instant purchasing within a single platform.
+As a result, many students engage in impulse buying without prior planning.
 
-However, students are often unaware of the psychological and platform-related factors 
-that influence their impulse buying behavior. At the same time, sellers and marketers 
-lack clear visual insights into these behaviors. Without proper data visualization, 
-important patterns and relationships within impulse buying behavior remain hidden.
+However, the factors driving this behavior—such as promotions, trust, enjoyment,
+product presentation, and personal shopping lifestyle—are not always clearly understood.
+Without proper visualization and analysis, it is difficult to identify patterns,
+relationships, and trends within impulse buying behavior.
 """)
 
-# ------------------------------------------------------------
+st.markdown("---")
+
+# --------------------------------------------------
 # Project Objectives
-# ------------------------------------------------------------
-st.header("🎯 Project Objectives")
-st.write("""
+# --------------------------------------------------
+st.subheader("🎯 Project Objectives")
+st.markdown("""
 **Main Objective:**  
-To analyze and visualize the factors influencing online impulse buying behavior on TikTok Shop 
-using scientific data visualization techniques.
+To analyze and visualize the factors influencing students’ impulse buying behavior
+on TikTok Shop using scientific data visualization techniques.
 
-**Sub-Objectives:**  
+**Sub-Objectives:**
 1. Analyze the demographic profile and TikTok Shop usage among students.  
-2. Evaluate the influence of scarcity and unexpected product discovery on shopping behavior.  
-3. Examine the role of **trust, enjoyment, and shopping motivation** on TikTok Shop.  
-4. Analyze product presentation, lifestyle factors, and impulse buying behavior.
+2. Evaluate the influence of scarcity and unexpected product discovery.  
+3. Examine the role of trust, enjoyment, and shopping motivation.  
+4. Analyze the impact of product presentation and shopping lifestyle on impulse buying behavior.
 """)
+
+st.markdown("---")
 
 # --------------------------------------------------
 # Dataset Description
@@ -105,14 +107,3 @@ Use the **sidebar** to navigate through different sections of the dashboard:
 """)
 
 st.info("📌 Please use the sidebar on the left to explore the analysis pages.")
-
-# ------------------------------------------------------------
-# Academic Note
-# ------------------------------------------------------------
-st.markdown("---")
-st.info("""
-📘 **Academic Note:**  
-This project is conducted for educational purposes only.  
-All data is anonymized and analyzed ethically to support learning in data visualization.
-""")
-
