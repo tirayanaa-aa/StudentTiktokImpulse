@@ -25,6 +25,33 @@ def app():
         df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
         
 
+# 1. Prepare the data
+# Plotly works best with a DataFrame where columns are clearly named
+gender_counts = df['gender'].value_counts().reset_index()
+gender_counts.columns = ['gender', 'count']
+
+# 2. Create the Plotly figure
+fig = px.pie(
+    gender_counts, 
+    values='count', 
+    names='gender', 
+    title='Distribution of Gender',
+    color_discrete_sequence=px.colors.qualitative.Pastel, # Matches your 'pastel' palette
+    hole=0 # Set to 0.4 if you prefer a donut chart style
+)
+
+# 3. Display in Streamlit
+# use_container_width=True ensures the chart scales with the Streamlit layout
+st.plotly_chart(fig, use_container_width=True)
+
+
+
+
+
+
+
+
+
 
 # 1. Prepare the data
 gender_counts = df['gender'].value_counts().reset_index()
