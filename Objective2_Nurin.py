@@ -13,7 +13,7 @@ def app():
     Scarcity cues such as time-limited promotions and limited product availability, as well as unexpected product discovery, are commonly used in digital commerce.
     However, without proper analysis, it is difficult to determine how strongly these factors influence student’s shopping perceptions and behaviors.
     """)
-  
+      
 #-----------------------------------------------
 # Load dataset
 #-----------------------------------------------
