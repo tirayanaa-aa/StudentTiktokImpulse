@@ -37,11 +37,9 @@ def app():
     # SAYA TELAH BETULKAN KURUNGAN DI SINI )
     st.plotly_chart(fig1, use_container_width=True)
     
-    # CUBA GUNAKAN ST.SUCCESS SUPAYA IA KELUAR DALAM KOTAK HIJAU
-    st.success("TEST: Ayat ini sepatutnya keluar di bawah carta!")
-    
-    st.markdown("### Interpretation")
-    st.write("The data shows that 78.8% of users are Female.")
+ st.success("""This pattern clearly shows that for many individuals, drug use begins as a form of self-medication to deal with existing emotional problems, demonstrating untreated psychological vulnerabilities.""")
+
+st.markdown("---")
 
     
     # 2. Age Group Histogram
