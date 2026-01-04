@@ -46,6 +46,38 @@ st.plotly_chart(fig, use_container_width=True)
 
 
 
+# 1. Define the correct order
+age_order = ['17 - 21 years old', '22 - 26 years old', '27 - 31 years old']
+
+# 2. Create the Plotly chart
+# px.histogram automatically performs the "count" aggregation
+fig = px.histogram(
+    df, 
+    x='age', 
+    color='tiktok_shop_experience',
+    barmode='group',                 # Side-by-side bars (like Seaborn)
+    category_orders={'age': age_order}, # Ensures the age groups follow your specific order
+    color_discrete_sequence=px.colors.sequential.Viridis,
+    title='TikTok Shop Usage across Age Groups',
+    labels={
+        'age': 'Age Group', 
+        'tiktok_shop_experience': 'Experience',
+        'count': 'Number of Users'
+    }
+)
+
+# 3. Refine the layout
+fig.update_layout(
+    yaxis_title="Count",
+    xaxis_title="Age Group",
+    legend_title="TikTok Shop Experience"
+)
+
+# 4. Display in Streamlit
+st.plotly_chart(fig, use_container_width=True)
+
+
+
 
 
 
