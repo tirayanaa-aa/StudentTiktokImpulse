@@ -47,24 +47,24 @@ fig.update_layout(showlegend=False, coloraxis_showscale=False)
 st.plotly_chart(fig, use_container_width=True)
 
 
-# 1. Create the contingency table (same as your code)
-contingency_table = pd.crosstab(df['monthly_income'], df['BrandDesign'])
+# 1. Create the crosstab (same as your original code)
+data_crosstab = pd.crosstab(df['monthly_income'], df['BrandDesign'])
 
 # 2. Create the Heatmap using Plotly Express
 fig = px.imshow(
-    contingency_table,
-    text_auto=True,                # Equivalent to annot=True and fmt='d'
+    data_crosstab,
+    text_auto=True,                # This replaces annot=True and fmt='d'
     color_continuous_scale='Viridis', 
-    aspect='auto',                 # Ensures the cells fit nicely
+    aspect='auto',                 # Adjusts cell sizing to fit the container
     labels=dict(
-        x='Brand Design/Quality', 
-        y='Monthly Income', 
-        color='Count'
+        x='Brand Design Score', 
+        y='Monthly Income Group', 
+        color='Count'              # Label for the color bar
     ),
-    title='Correlation between Monthly Income and Brand Design/Quality'
+    title='Distribution of Brand Design Preference by Income Level'
 )
 
-# 3. Optional: Customize axes layout
+# 3. Optional: Move the x-axis labels to the bottom (Plotly defaults to top for heatmaps)
 fig.update_xaxes(side="bottom")
 
 # 4. Display in Streamlit
