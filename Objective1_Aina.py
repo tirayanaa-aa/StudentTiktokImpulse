@@ -42,6 +42,13 @@ def app():
     relate to TikTok Shop usage may reduce the effectiveness of targeted marketing strategies.
     """)
 
+     # --------------------------------------------------
+    # Load dataset
+    # --------------------------------------------------
+    # Ensure this CSV file is in the same folder on GitHub
+    df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
+
+    
     # 2. Age Group Histogram
     st.subheader("Usage by Age")
     age_order = ['17 - 21 years old', '22 - 26 years old', '27 - 31 years old']
