@@ -1,5 +1,6 @@
 import plotly.express as px
 import streamlit as st
+import pandas as pd
 
 # 1. Prepare the data
 gender_counts = df['gender'].value_counts().reset_index()
@@ -18,10 +19,6 @@ fig = px.pie(
 # 3. Display in Streamlit
 st.plotly_chart(fig, use_container_width=True)
 
-
-
-import plotly.express as px
-import streamlit as st
 
 # 1. Prepare the data
 # We reset the index to turn the Series into a DataFrame that Plotly can read easily
@@ -50,3 +47,25 @@ fig.update_layout(showlegend=False, coloraxis_showscale=False)
 st.plotly_chart(fig, use_container_width=True)
 
 
+# 1. Create the contingency table (same as your code)
+contingency_table = pd.crosstab(df['monthly_income'], df['BrandDesign'])
+
+# 2. Create the Heatmap using Plotly Express
+fig = px.imshow(
+    contingency_table,
+    text_auto=True,                # Equivalent to annot=True and fmt='d'
+    color_continuous_scale='Viridis', 
+    aspect='auto',                 # Ensures the cells fit nicely
+    labels=dict(
+        x='Brand Design/Quality', 
+        y='Monthly Income', 
+        color='Count'
+    ),
+    title='Correlation between Monthly Income and Brand Design/Quality'
+)
+
+# 3. Optional: Customize axes layout
+fig.update_xaxes(side="bottom")
+
+# 4. Display in Streamlit
+st.plotly_chart(fig, use_container_width=True)
