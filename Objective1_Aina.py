@@ -137,10 +137,6 @@ st.plotly_chart(fig, use_container_width=True)
 
 
 
-import plotly.express as px
-import streamlit as st
-import pandas as pd
-
 # 1. Create the crosstab and reset the index
 # Plotly Express works best when the category ('gender') is a column, not just the index
 crosstab_df = pd.crosstab(df['gender'], df['tiktok_shop_experience']).reset_index()
@@ -164,6 +160,31 @@ fig.update_layout(
     legend_title="TikTok Shop Experience",
     hovermode="x unified"      # Shows all stack values in one tooltip when hovering
 )
+
+# 4. Display in Streamlit
+st.plotly_chart(fig, use_container_width=True)
+
+
+# 1. Create the crosstab (same as your original code)
+data_crosstab = pd.crosstab(df['monthly_income'], df['BrandDesign'])
+
+# 2. Create the Heatmap using Plotly Express
+fig = px.imshow(
+    data_crosstab,
+    text_auto=True,               # Equivalent to annot=True and fmt='d'
+    color_continuous_scale='Viridis', 
+    aspect='auto',                # Ensures cells resize to fit the layout
+    labels=dict(
+        x='Brand Design Score', 
+        y='Monthly Income Group', 
+        color='Count'             # Label for the color bar
+    ),
+    title='Distribution of Brand Design Preference by Income Level'
+)
+
+# 3. Optional: Refine layout
+# This moves the x-axis labels to the bottom (Plotly defaults to top for heatmaps)
+fig.update_xaxes(side="bottom")
 
 # 4. Display in Streamlit
 st.plotly_chart(fig, use_container_width=True)
