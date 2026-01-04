@@ -39,8 +39,7 @@ def app():
     
     st.write("""
     **Interpretation:**  
-    The correlation heatmap supports the finding that trust-related factors such as reliability, honesty, and product quality are positively associated with motivation factors such as discounts and gifts.
-    This indicates that higher trust increases shopping motivation on TikTok Shop.
+    The pie chart shows a significant gender imbalance, with females making up the vast majority at 78.8% compared to males at 21.2%. This indicates that the dataset is heavily dominated by female respondents, outnumbering males by nearly four to one.
     """)
 
     
