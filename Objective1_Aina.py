@@ -36,6 +36,12 @@ def app():
     )
     st.plotly_chart(fig1, use_container_width=True)
 
+    st.write("""
+    E-commerce platforms such as TikTok Shop serve users from diverse demographic backgrounds. 
+    However, limited understanding of how factors such as gender, age group, faculty, and income 
+    relate to TikTok Shop usage may reduce the effectiveness of targeted marketing strategies.
+    """)
+
     # 2. Age Group Histogram
     st.subheader("Usage by Age")
     age_order = ['17 - 21 years old', '22 - 26 years old', '27 - 31 years old']
