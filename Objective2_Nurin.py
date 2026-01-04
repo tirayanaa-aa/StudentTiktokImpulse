@@ -4,28 +4,21 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-# --- Streamlit Configuration ---
-st.set_page_config(
-    page_title="member_B",
-    layout="wide"
-)
-
-st.header(
+def app():
+    st.header(
     "Sub-Objective 2: Evaluate the Influence of Scarcity and Serendipity on Shopping Behavior"
-)
-
-st.subheader("Problem Statement")
-st.write("""
+    )
+    st.subheader("Problem Statement")
+    st.write("""
     Scarcity cues such as time-limited promotions and limited product availability, as well as unexpected product discovery, are commonly used in digital commerce.
     However, without proper analysis, it is difficult to determine how strongly these factors influence student’s shopping perceptions and behaviors.
     """)
+  
+#-----------------------------------------------
+# Load dataset
+#-----------------------------------------------
+df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
 
-# ######################################################################
-# --- 1. DATA LOADING FROM URL (Replaced Dummy Data) ---
-url = 'https://raw.githubusercontent.com/tirayanaa-aa/StudentTiktokImpulse/refs/heads/main/tiktok_impulse_buying_cleaned.csv'
-
-# Consider using @st.cache_data for improved performance in a real Streamlit app
-df = pd.read_csv(url)
 
 #Heatmap
 # Create a sub-dataframe with only 'Scarcity' and 'Serendipity'
