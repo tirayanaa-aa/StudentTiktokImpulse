@@ -37,10 +37,11 @@ def app():
     # SAYA TELAH BETULKAN KURUNGAN DI SINI )
     st.plotly_chart(fig1, use_container_width=True)
     
-    # INTERPRETASI (Gunakan data dari carta anda: Female 78.8%)
-    st.write("**Interpretation:** The pie chart reveals that the respondent pool is dominated by **Female** users, representing **78.8%** of the total. This suggests that marketing efforts should be tailored toward this specific demographic.")
-
-    # --------------------------------------------------
+    # CUBA GUNAKAN ST.SUCCESS SUPAYA IA KELUAR DALAM KOTAK HIJAU
+    st.success("TEST: Ayat ini sepatutnya keluar di bawah carta!")
+    
+    st.markdown("### Interpretation")
+    st.write("The data shows that 78.8% of users are Female.")
 
     
     # 2. Age Group Histogram
