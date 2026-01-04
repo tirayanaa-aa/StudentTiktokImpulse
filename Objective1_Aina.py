@@ -105,6 +105,36 @@ st.plotly_chart(fig, use_container_width=True)
 
 
 
+import plotly.express as px
+import streamlit as st
+
+# 1. Prepare the data
+# We reset the index to turn the Series into a DataFrame that Plotly can read easily
+faculty_counts = df['faculty'].value_counts().reset_index()
+faculty_counts.columns = ['faculty', 'count']
+
+# 2. Sort the data (matching your ascending=True logic)
+faculty_counts = faculty_counts.sort_values(by='count', ascending=True)
+
+# 3. Create the Plotly Bar Chart
+fig = px.bar(
+    faculty_counts, 
+    x='count', 
+    y='faculty', 
+    orientation='h',
+    title='Distribution of Faculty',
+    color='count',                # Maps color to the value
+    color_continuous_scale='Viridis', # Matches your 'viridis' palette
+    labels={'count': 'Count', 'faculty': 'Faculty'}
+)
+
+# 4. Optional: Clean up the layout
+# Removes the color bar legend on the right for a cleaner look
+fig.update_layout(coloraxis_showscale=False)
+
+# 5. Display in Streamlit
+st.plotly_chart(fig, use_container_width=True)
+
 
 
 
