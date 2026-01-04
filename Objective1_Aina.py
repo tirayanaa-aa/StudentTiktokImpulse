@@ -2,6 +2,8 @@ import plotly.express as px
 import streamlit as st
 import pandas as pd
 
+https://raw.githubusercontent.com/tirayanaa-aa/StudentTiktokImpulse/refs/heads/main/tiktok_impulse_buying_cleaned.csv
+
 
 st.set_page_config(page_title="TikTok Shop Analysis", layout="wide")
 
