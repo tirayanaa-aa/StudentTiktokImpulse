@@ -4,250 +4,200 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
+
 def app():
+
+    # --------------------------------------------------
+    # Page Title
+    # --------------------------------------------------
     st.header(
-    "Sub-Objective 2: Evaluate the Influence of Scarcity and Serendipity on Shopping Behavior"
+        "Sub-Objective 2: Evaluate the Influence of Scarcity and Serendipity on Shopping Behavior"
     )
+
     st.subheader("Problem Statement")
     st.write("""
-    Scarcity cues such as time-limited promotions and limited product availability, as well as unexpected product discovery, are commonly used in digital commerce.
-    However, without proper analysis, it is difficult to determine how strongly these factors influence student’s shopping perceptions and behaviors.
-    """)
-      
-#-----------------------------------------------
-# Load dataset
-#-----------------------------------------------
-df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
-
-
-#Heatmap
-# Create a sub-dataframe with only 'Scarcity' and 'Serendipity'
-correlation_data = df[['Scarcity', 'Serendipity']]
-
-# Calculate the correlation matrix
-correlation_matrix = correlation_data.corr()
-
-# Create Plotly heatmap
-fig = px.imshow(
-    correlation_matrix,
-    text_auto=".2f",
-    color_continuous_scale="RdBu",
-    zmin=-1,
-    zmax=1
-)
-
-fig.update_layout(
-    title="Correlation Heatmap Between Scarcity and Serendipity Scores",
-    width=500,
-    height=450
-)
-
-# Display in Streamlit
-st.plotly_chart(fig, use_container_width=True)
-st.write("""
-    **Interpretation:**  
-    The correlation heatmap shows a moderate positive relationship, at 0.55, between Scarcity and Serendipity.Scarcity makes students feel there is urgency to go out and find products, which in return makes them discover new or unplanned items.
-    However, the strength of the relationship is not that high, meaning both Scarcity and Serendipity still affect shopping behavior differently.
+    Scarcity cues such as time-limited promotions and limited product availability, 
+    as well as unexpected product discovery, are commonly used in digital commerce. 
+    However, without proper analysis, it is difficult to determine how strongly 
+    these factors influence students’ shopping perceptions and behaviors.
     """)
 
-#Monthly Income Bar Chart
-# Calculate the average Scarcity and Serendipity scores by monthly_income
-average_scores_by_income = (
-    df.groupby('monthly_income')[['Scarcity', 'Serendipity']]
-    .mean()
-    .reset_index()
-)
+    # --------------------------------------------------
+    # Load Dataset 
+    # --------------------------------------------------
+   
+    df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
 
-# Define income order
-income_order = ['Under RM100', 'RM100 - RM300', 'Over RM300']
-average_scores_by_income['monthly_income'] = pd.Categorical(
-    average_scores_by_income['monthly_income'],
-    categories=income_order,
-    ordered=True
-)
-average_scores_by_income = average_scores_by_income.sort_values('monthly_income')
+    # ==================================================
+    # 1. Correlation Heatmap
+    # ==================================================
+    correlation_data = df[['Scarcity', 'Serendipity']]
+    correlation_matrix = correlation_data.corr()
 
-# Melt dataframe for Plotly
-melted_scores_income = average_scores_by_income.melt(
-    id_vars='monthly_income',
-    value_vars=['Scarcity', 'Serendipity'],
-    var_name='Score_Type',
-    value_name='Average_Score'
-)
+    fig = px.imshow(
+        correlation_matrix,
+        text_auto=".2f",
+        color_continuous_scale="RdBu",
+        zmin=-1,
+        zmax=1,
+        title="Correlation Heatmap Between Scarcity and Serendipity Scores"
+    )
 
-# Create Plotly grouped bar chart
-fig = px.bar(
-    melted_scores_income,
-    x='monthly_income',
-    y='Average_Score',
-    color='Score_Type',
-    barmode='group',
-    category_orders={'monthly_income': income_order},
-    labels={
-        'monthly_income': 'Monthly Income (in RM)',
-        'Average_Score': 'Average Score',
-        'Score_Type': 'Score Type'
-    },
-    title='Average Scarcity and Serendipity Scores by Monthly Income'
-)
+    fig.update_layout(height=450)
+    st.plotly_chart(fig, use_container_width=True)
 
-fig.update_layout(
-    height=500,
-    xaxis_tickangle=-45
-)
-
-# Display in Streamlit
-st.plotly_chart(fig, use_container_width=True)
-st.write("""
+    st.write("""
     **Interpretation:**  
-   Results show that scarcity and Serendipity discovery both influence shopping behaviour on TikTok Shop, with differences across income groups.
-   Students earning less than RM100 are strongly influenced by limited-time offers and low product availability.The highest unexpected discovery score is recorded in the RM100–RM300 group, which suggests that this group is most influenced by the discovery of new or unexpected products
+    The correlation heatmap indicates a moderate positive relationship (r = 0.55) 
+    between scarcity and serendipity. This suggests that scarcity cues may encourage 
+    students to explore products more actively, increasing the likelihood of 
+    discovering unexpected items. However, the relationship is not strong, indicating 
+    that both factors influence shopping behaviour independently.
     """)
 
-#Gender Bar Chart
-# Calculate the average Scarcity and Serendipity scores by gender
-average_scores_by_gender = (
-    df.groupby('gender')[['Scarcity', 'Serendipity']]
-    .mean()
-    .reset_index()
-)
+    # ==================================================
+    # 2. Monthly Income vs Scores
+    # ==================================================
+    average_scores_by_income = (
+        df.groupby('monthly_income')[['Scarcity', 'Serendipity']]
+        .mean()
+        .reset_index()
+    )
 
-# Melt dataframe for Plotly
-melted_scores = average_scores_by_gender.melt(
-    id_vars='gender',
-    value_vars=['Scarcity', 'Serendipity'],
-    var_name='Score_Type',
-    value_name='Average_Score'
-)
+    income_order = ['Under RM100', 'RM100 - RM300', 'Over RM300']
+    average_scores_by_income['monthly_income'] = pd.Categorical(
+        average_scores_by_income['monthly_income'],
+        categories=income_order,
+        ordered=True
+    )
 
-# Create Plotly grouped bar chart
-fig = px.bar(
-    melted_scores,
-    x='gender',
-    y='Average_Score',
-    color='Score_Type',
-    barmode='group',
-    labels={
-        'gender': 'Gender',
-        'Average_Score': 'Average Score',
-        'Score_Type': 'Score Type'
-    },
-    title='Average Scarcity and Serendipity Scores by Gender'
-)
+    melted_scores_income = average_scores_by_income.melt(
+        id_vars='monthly_income',
+        value_vars=['Scarcity', 'Serendipity'],
+        var_name='Score_Type',
+        value_name='Average_Score'
+    )
 
-fig.update_layout(
-    height=450,
-    xaxis_tickangle=0
-)
+    fig = px.bar(
+        melted_scores_income,
+        x='monthly_income',
+        y='Average_Score',
+        color='Score_Type',
+        barmode='group',
+        category_orders={'monthly_income': income_order},
+        title="Average Scarcity and Serendipity Scores by Monthly Income",
+        labels={
+            'monthly_income': 'Monthly Income (RM)',
+            'Average_Score': 'Average Score'
+        }
+    )
 
-# Display in Streamlit
-st.plotly_chart(fig, use_container_width=True)
-st.write("""
+    fig.update_layout(height=500)
+    st.plotly_chart(fig, use_container_width=True)
+
+    st.write("""
     **Interpretation:**  
-    From the results, it can be noted that both male and female shoppers are driven by scarcity and serendipity in TikTok Shop.
-    Scarcity scores of both male and female shoppers are more or less at par as both male and female shoppers are equally impacted by scarcity marketing. Males are slightly more driven by serendipity as their serendipity score is a bit higher compared to females.
+    The results indicate that scarcity and serendipity influence shopping behaviour 
+    differently across income groups. Students earning under RM100 are more sensitive 
+    to scarcity cues such as limited-time offers, while students in the RM100–RM300 
+    group exhibit the highest serendipity scores, suggesting stronger influence from 
+    unexpected product discovery.
     """)
 
-#Box Plot
-# Create subplots (1 row, 2 columns)
-fig = make_subplots(
-    rows=1,
-    cols=2,
-    subplot_titles=[
-        "Distribution of Scarcity Score",
-        "Distribution of Serendipity Score"
-    ]
-)
+    # ==================================================
+    # 3. Gender Comparison
+    # ==================================================
+    average_scores_by_gender = (
+        df.groupby('gender')[['Scarcity', 'Serendipity']]
+        .mean()
+        .reset_index()
+    )
 
-# Box plot for Scarcity
-fig.add_trace(
-    go.Box(
-        y=df['Scarcity'],
-        name='Scarcity',
-        boxmean=True
-    ),
-    row=1,
-    col=1
-)
+    melted_scores_gender = average_scores_by_gender.melt(
+        id_vars='gender',
+        value_vars=['Scarcity', 'Serendipity'],
+        var_name='Score_Type',
+        value_name='Average_Score'
+    )
 
-# Box plot for Serendipity
-fig.add_trace(
-    go.Box(
-        y=df['Serendipity'],
-        name='Serendipity',
-        boxmean=True
-    ),
-    row=1,
-    col=2
-)
+    fig = px.bar(
+        melted_scores_gender,
+        x='gender',
+        y='Average_Score',
+        color='Score_Type',
+        barmode='group',
+        title="Average Scarcity and Serendipity Scores by Gender",
+        labels={
+            'gender': 'Gender',
+            'Average_Score': 'Average Score'
+        }
+    )
 
-# Layout adjustments
-fig.update_layout(
-    height=450,
-    showlegend=False
-)
+    fig.update_layout(height=450)
+    st.plotly_chart(fig, use_container_width=True)
 
-# Display in Streamlit
-st.plotly_chart(fig, use_container_width=True)
-st.write("""
+    st.write("""
     **Interpretation:**  
-    The box plots above demonstrate that Scarcity and Serendipity scores tend to be moderately to highly valued among consumers on TikTok Shop.
-    The median scores for Scarcity and Serendipity are close to the upper-middle levels, suggesting that consumers tend to be exposed to feelings of scarcity and serendipity during their shopping experiences on TikTok Shop.
+    Both male and female students are influenced by scarcity and serendipity cues on 
+    TikTok Shop. Scarcity scores are similar across genders, indicating equal sensitivity 
+    to urgency-based marketing. However, male students show slightly higher serendipity 
+    scores, suggesting a greater tendency toward exploratory shopping behaviour.
     """)
 
-#Histogram
-# Create subplots (1 row, 2 columns)
-fig = make_subplots(
-    rows=1,
-    cols=2,
-    subplot_titles=[
-        "Distribution of Scarcity Score",
-        "Distribution of Serendipity Score"
-    ]
-)
+    # ==================================================
+    # 4. Box Plots
+    # ==================================================
+    fig = make_subplots(
+        rows=1,
+        cols=2,
+        subplot_titles=[
+            "Distribution of Scarcity Scores",
+            "Distribution of Serendipity Scores"
+        ]
+    )
 
-# Histogram for Scarcity Score
-fig.add_trace(
-    go.Histogram(
-        x=df['Scarcity'],
-        nbinsx=5,
-        histnorm='probability density',
-        name='Scarcity'
-    ),
-    row=1,
-    col=1
-)
+    fig.add_trace(go.Box(y=df['Scarcity'], boxmean=True, name='Scarcity'), row=1, col=1)
+    fig.add_trace(go.Box(y=df['Serendipity'], boxmean=True, name='Serendipity'), row=1, col=2)
 
-# Histogram for Serendipity Score
-fig.add_trace(
-    go.Histogram(
-        x=df['Serendipity'],
-        nbinsx=5,
-        histnorm='probability density',
-        name='Serendipity'
-    ),
-    row=1,
-    col=2
-)
+    fig.update_layout(height=450, showlegend=False)
+    st.plotly_chart(fig, use_container_width=True)
 
-# Layout adjustments
-fig.update_layout(
-    height=450,
-    showlegend=False,
-    bargap=0.1
-)
-
-# Axis labels
-fig.update_xaxes(title_text="Scarcity Score", row=1, col=1)
-fig.update_yaxes(title_text="Density", row=1, col=1)
-
-fig.update_xaxes(title_text="Serendipity Score", row=1, col=2)
-fig.update_yaxes(title_text="Density", row=1, col=2)
-
-# Display in Streamlit
-st.plotly_chart(fig, use_container_width=True)
-st.write("""
+    st.write("""
     **Interpretation:**  
-    The distribution of data reveals that both scarcity and serendipity have a significant impact on purchasing habits when it comes to shopping on TikTok Shop.
-    The scarcity scores vary across the medium to high range. Additionally, the scores on serendipity lie on the higher side, implying consumers are often driven by discovering products that were unknown to them.
+    The box plots show that both scarcity and serendipity scores are generally moderate 
+    to high. Median values lie in the upper-middle range, indicating that students 
+    frequently experience urgency and unexpected discovery when shopping on TikTok Shop.
+    """)
+
+    # ==================================================
+    # 5. Histograms
+    # ==================================================
+    fig = make_subplots(
+        rows=1,
+        cols=2,
+        subplot_titles=[
+            "Distribution of Scarcity Scores",
+            "Distribution of Serendipity Scores"
+        ]
+    )
+
+    fig.add_trace(
+        go.Histogram(x=df['Scarcity'], nbinsx=5, histnorm='probability density'),
+        row=1, col=1
+    )
+
+    fig.add_trace(
+        go.Histogram(x=df['Serendipity'], nbinsx=5, histnorm='probability density'),
+        row=1, col=2
+    )
+
+    fig.update_layout(height=450, showlegend=False, bargap=0.1)
+    st.plotly_chart(fig, use_container_width=True)
+
+    st.write("""
+    **Interpretation:**  
+    The distributions indicate that scarcity scores are spread across the medium to high 
+    range, while serendipity scores are skewed toward higher values. This suggests that 
+    unexpected product discovery plays a significant role in shaping students’ shopping 
+    behaviour on TikTok Shop.
     """)
