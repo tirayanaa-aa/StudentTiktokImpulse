@@ -20,7 +20,6 @@ page = st.sidebar.selectbox(
 
 if page == "Main Page":
     import main
-    main_app()
 
 elif page == "Objective1_Aina":
     import Objective1_Aina
