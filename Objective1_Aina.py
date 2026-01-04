@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 
 def app():
-    # Everything below this line is indented by 4 spaces
+    # Everything below this line MUST be indented by 4 spaces
     st.header("Sub-Objective 1: Analyze the Demographic Profile and TikTok Shop Usage")
 
     # --------------------------------------------------
@@ -20,7 +20,11 @@ def app():
     # Load dataset
     # --------------------------------------------------
     # Ensure this CSV file is in the same folder on GitHub
-    df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
+    try:
+        df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
+    except FileNotFoundError:
+        st.error("Dataset not found. Please check the file path.")
+        return
 
     # 1. Gender Pie Chart
     st.subheader("Gender Distribution")
@@ -35,13 +39,8 @@ def app():
         color_discrete_sequence=px.colors.qualitative.Pastel
     )
     st.plotly_chart(fig1, use_container_width=True)
-    
-    # ADD INTERPRETATION HERE
-    st.write("Interpretation: The pie chart reveals that the respondent pool is dominated by [Gender], representing [Percentage]% of the total. This suggests that marketing efforts should be tailored toward this specific demographic.")
+    st.write("Interpretation: The pie chart reveals the gender distribution within the respondent pool.")
 
-    # --------------------------------------------------
-
-    
     # 2. Age Group Histogram
     st.subheader("Usage by Age")
     age_order = ['17 - 21 years old', '22 - 26 years old', '27 - 31 years old']
@@ -55,12 +54,8 @@ def app():
         title='TikTok Shop Usage across Age Groups'
     )
     st.plotly_chart(fig2, use_container_width=True)
+    st.write("**Interpretation:** The 22–26 years old age group shows the highest TikTok Shop usage.")
 
-    st.write("""
-    **Interpretation:**  
-    The bar chart reveals that the 22–26 years old age group has the highest TikTok Shop usage, with a count of approximately 80 respondents. In contrast, usage is significantly lower among the 17–21 and 27–31 age groups, indicating that the platform's shopping features are most popular among young adults in their mid-twenties.
-    """)
-    
     # 3. Monthly Income Distribution
     st.subheader("Income Distribution")
     income_order = df['monthly_income'].value_counts().index.tolist()
@@ -73,11 +68,7 @@ def app():
         title='Monthly Income Category Distribution'
     )
     st.plotly_chart(fig3, use_container_width=True)
-
-     st.write("""
-    **Interpretation:**  
-   The bar chart for TikTok Shop Usage across Age Groups shows that the 22–26 years old group has the highest engagement, with a count of 80 users. This is significantly higher than the 17–21 years old group (under 20 users) and the 27–31 years old group, which shows the lowest activity.
-    """)
+    st.write("**Interpretation:** Most users fall into the lower income category.")
 
     # 4. Faculty Distribution
     st.subheader("Distribution by Faculty")
@@ -95,31 +86,26 @@ def app():
         color_continuous_scale='Viridis'
     )
     st.plotly_chart(fig4, use_container_width=True)
+    st.write("**Interpretation:** Usage is predominantly driven by students from specific faculties like FSDK.")
 
-    st.write("""
-    **Interpretation:**  
-   The data shows that TikTok Shop usage is predominantly driven by the 22–26 years old age group and students from the FSDK faculty. Most of these users fall into the lower income category of Under RM100, with participation rates declining as age and income levels increase.
-    """)
-
-
-# 5. TikTok Shop Experience by Gender
+    # 5. TikTok Shop Experience by Gender
+    # FIXED: Ensure this block is indented inside the app() function
     st.subheader("TikTok Shop Experience by Gender")
     
-    # Create the crosstab and reset index for Plotly
+    # Create the crosstab
     crosstab_df = pd.crosstab(df['gender'], df['tiktok_shop_experience']).reset_index()
 
     # Create the Stacked Bar Chart
     fig5 = px.bar(
         crosstab_df, 
         x='gender', 
-        y=crosstab_df.columns[1:], # Selects experience categories (e.g., Yes/No)
+        y=crosstab_df.columns[1:], 
         title='TikTok Shop Experience by Gender (Stacked Bar Chart)',
         labels={'gender': 'Gender', 'value': 'Count', 'variable': 'Experience'},
         color_discrete_sequence=px.colors.sequential.Viridis,
         barmode='stack'
     )
     
-    # Improve layout for Streamlit
     fig5.update_layout(
         xaxis_title="Gender",
         yaxis_title="Number of Respondents",
@@ -130,9 +116,10 @@ def app():
     st.plotly_chart(fig5, use_container_width=True)
 
     st.write("""
-    **Interpretation:** The stacked bar chart illustrates the distribution of TikTok Shop experience across genders. It allows us to see not only which gender has the highest representation in the dataset but also the proportion of users within each gender who have utilized TikTok Shop features, helping identify if a gender-based gap exists in platform adoption.
+    **Interpretation:** The stacked bar chart illustrates the distribution of TikTok Shop experience across genders. 
+    It allows us to see not only which gender has the highest representation but also the proportion of users within 
+    each gender who have used TikTok Shop, helping identify gender-based trends in platform adoption.
     """)
-
 
 
 
