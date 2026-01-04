@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 
 def app():
-    # Everything below this line is indented by 4 spaces
+    # Pastikan setiap baris di bawah ini mempunyai 4 ruang kosong (indent)
     st.header("Sub-Objective 1: Analyze the Demographic Profile and TikTok Shop Usage")
 
     # --------------------------------------------------
@@ -19,7 +19,6 @@ def app():
     # --------------------------------------------------
     # Load dataset
     # --------------------------------------------------
-    # Ensure this CSV file is in the same folder on GitHub
     df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
 
     # 1. Gender Pie Chart
@@ -34,10 +33,12 @@ def app():
         title='Distribution of Gender',
         color_discrete_sequence=px.colors.qualitative.Pastel
     )
+    
+    # SAYA TELAH BETULKAN KURUNGAN DI SINI )
     st.plotly_chart(fig1, use_container_width=True)
     
-    # ADD INTERPRETATION HERE
-    st.write("**Interpretation:** The pie chart reveals that the respondent pool is dominated by [Gender], representing [Percentage]% of the total. This suggests that marketing efforts should be tailored toward this specific demographic.")
+    # INTERPRETASI (Gunakan data dari carta anda: Female 78.8%)
+    st.write("**Interpretation:** The pie chart reveals that the respondent pool is dominated by **Female** users, representing **78.8%** of the total. This suggests that marketing efforts should be tailored toward this specific demographic.")
 
     # --------------------------------------------------
 
