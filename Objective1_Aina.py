@@ -69,3 +69,31 @@ fig.update_xaxes(side="bottom")
 
 # 4. Display in Streamlit
 st.plotly_chart(fig, use_container_width=True)
+
+
+# 1. Create the crosstab and reset index 
+# Plotly Express works best when variables are columns, not just indices
+crosstab_df = pd.crosstab(df['gender'], df['tiktok_shop_experience']).reset_index()
+
+# 2. Create the Stacked Bar Chart
+# barmode='stack' is the default for px.bar, but we'll be explicit
+fig = px.bar(
+    crosstab_df, 
+    x='gender', 
+    y=crosstab_df.columns[1:], # Selects all experience columns automatically
+    title='TikTok Shop Experience by Gender (Stacked Bar Chart)',
+    labels={'gender': 'Gender', 'value': 'Count', 'variable': 'Experience'},
+    color_discrete_sequence=px.colors.sequential.Viridis,
+    template='plotly_white'
+)
+
+# 3. Update layout for better readability
+fig.update_layout(
+    xaxis_title="Gender",
+    yaxis_title="Count",
+    legend_title="TikTok Shop Experience",
+    barmode='stack'
+)
+
+# 4. Display in Streamlit
+st.plotly_chart(fig, use_container_width=True)
