@@ -149,6 +149,7 @@ def app():
     else:
         st.warning(f"Missing columns for correlation: {missing_cols}")
 
+    
     # =========================
     # 3. LIKERT STACKED BAR CHART
     # =========================
@@ -177,8 +178,32 @@ def app():
             yaxis_title='Number of Respondents'
         )
         st.plotly_chart(fig3, use_container_width=True)
+        # -------------------------
+        # INTERPRETATION / INSIGHTS
+        # -------------------------
+        st.markdown("""
+        <div style="
+            background-color:#f8fafc;
+            padding:16px;
+            border-left:6px solid #6366f1;
+            border-radius:10px;
+            box-shadow:0 2px 6px rgba(0,0,0,0.05);
+            margin-top:10px;
+        ">
+        <h4 style="margin-bottom:8px;">📌 Key Insights</h4>
+
+        <ul style="margin-left:15px;">
+           <li>Most respondents selected higher agreement levels (4 and 5) across all product presentation items.</li>
+           <li>Image quality and product description show particularly strong positive responses, indicating their importance in online purchasing decisions.</li>
+           <li>Multi-angle visuals and rich product information also receive consistent agreement, suggesting that detailed visual presentation enhances consumer confidence.</li>
+           <li>Overall, the distribution reflects that well-presented products on TikTok Shop play a key role in encouraging impulse buying behaviour.</li>
+       </ul>
+       </div>
+       """, unsafe_allow_html=True)
+
     else:
         st.warning(f"Missing Likert columns: {missing_cols}")
+
 
     # =========================
     # 4. MULTI HISTOGRAM – PURCHASE BEHAVIOR
