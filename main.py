@@ -159,7 +159,7 @@ The dataset was collected through an online questionnaire distributed to univers
 st.markdown(st.markdown("""
 **Dataset Summary:**
 - Total Respondents: **113 students**
-- Total Variables: **XX variables**
+- Total Variables: **43 variables**
 - Likert Scale: **1 (Strongly Disagree) – 5 (Strongly Agree)**
 - Missing Values: **Removed during cleaning**
 """)
