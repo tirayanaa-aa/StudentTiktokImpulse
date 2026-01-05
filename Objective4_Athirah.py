@@ -29,45 +29,45 @@ def app():
     df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
 
     
-   # =========================
-   # SUMMARY METRICS
-   # =========================
-   st.markdown("## 📊 Summary Metrics")
+    # =========================
+    # SUMMARY METRICS
+    # =========================
+    st.markdown("## 📊 Summary Metrics")
 
-   metric_cols = ['SL_score', 'PP_score', 'OIB_score']
-   missing_cols = [c for c in metric_cols if c not in df.columns]
+    metric_cols = ['SL_score', 'PP_score', 'OIB_score']
+    missing_cols = [c for c in metric_cols if c not in df.columns]
 
-   if not missing_cols:
-       col1, col2, col3 = st.columns(3)
+    if not missing_cols:
+        col1, col2, col3 = st.columns(3)
 
-       # Add delta = 0 just for nicer look
-       col1.metric(
-           label="Average Lifestyle Score (SL)",
-           value=f"{df['SL_score'].mean():.2f}",
-           delta=f"{df['SL_score'].max() - df['SL_score'].min():.2f} range"
-       )
+        # Add delta = 0 just for nicer look
+        col1.metric(
+            label="Average Lifestyle Score (SL)",
+            value=f"{df['SL_score'].mean():.2f}",
+            delta=f"{df['SL_score'].max() - df['SL_score'].min():.2f} range"
+        )
 
-       col2.metric(
-           label="Average Product Presentation Score (PP)",
-           value=f"{df['PP_score'].mean():.2f}",
-           delta=f"{df['PP_score'].max() - df['PP_score'].min():.2f} range"
-       )
+        col2.metric(
+            label="Average Product Presentation Score (PP)",
+            value=f"{df['PP_score'].mean():.2f}",
+            delta=f"{df['PP_score'].max() - df['PP_score'].min():.2f} range"
+        )
 
-       col3.metric(
-           label="Average Impulse Buying Score (OIB)",
-           value=f"{df['OIB_score'].mean():.2f}",
-           delta=f"{df['OIB_score'].max() - df['OIB_score'].min():.2f} range"
-       )
+        col3.metric(
+            label="Average Impulse Buying Score (OIB)",
+            value=f"{df['OIB_score'].mean():.2f}",
+            delta=f"{df['OIB_score'].max() - df['OIB_score'].min():.2f} range"
+        )
 
-       st.markdown("### 🔍 Descriptive Statistics")
-       summary_df = df[metric_cols].describe().round(2)
+        st.markdown("### 🔍 Descriptive Statistics")
+        summary_df = df[metric_cols].describe().round(2)
 
-       # Style dataframe
-       styled_df = summary_df.style.background_gradient(cmap='Blues', axis=1)
-       st.dataframe(styled_df, height=220)
+        # Style dataframe
+        styled_df = summary_df.style.background_gradient(cmap='Blues', axis=1)
+        st.dataframe(styled_df, height=220)
 
-else:
-    st.warning(f"Missing columns for summary metrics: {missing_cols}")
+    else:
+        st.warning(f"Missing columns for summary metrics: {missing_cols}")
 
 
     
