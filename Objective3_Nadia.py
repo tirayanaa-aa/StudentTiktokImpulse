@@ -96,7 +96,9 @@ def app():
     else:
         st.warning(f"Missing columns for correlation: {missing_corr}")
 
-        st.write(""" **Interpretation:** The correlation heatmap supports the finding that trust-related factors such as reliability, honesty, and product quality are positively associated with motivation factors such as discounts and gifts.
+        st.write("""
+        **Interpretation:**  
+        The correlation heatmap supports the finding that trust-related factors such as reliability, honesty, and product quality are positively associated with motivation factors such as discounts and gifts.
         This indicates that higher trust increases shopping motivation on TikTok Shop.
         """)
 
@@ -112,14 +114,14 @@ def app():
         st.plotly_chart(fig2, use_container_width=True)
     else:
         st.warning(f"Missing trust columns: {missing_trust}")
-
+        
         st.write("""
         **Interpretation:**  
         This bar chart compares the average trust scores across different trust dimensions.
         The results show that product variety and reliability receive the highest trust ratings,
         indicating these aspects are most important to respondents.
         """)
-
+        
     # --------------------------------------------------
     # 3️⃣ Box Plot – Trust Responses
     # --------------------------------------------------
