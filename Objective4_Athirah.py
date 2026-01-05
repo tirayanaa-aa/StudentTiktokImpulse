@@ -229,6 +229,29 @@ def app():
             yaxis_title='Number of Respondents'
         )
         st.plotly_chart(fig4, use_container_width=True)
+        # -------------------------
+        # INTERPRETATION / INSIGHTS
+        # -------------------------
+        st.markdown("""
+        <div style="
+            background-color:#f8fafc;
+            padding:16px;
+            border-left:6px solid #6366f1;
+            border-radius:10px;
+            box-shadow:0 2px 6px rgba(0,0,0,0.05);
+            margin-top:10px;
+        ">
+        <h4 style="margin-bottom:8px;">📌 Key Insights</h4>
+
+        <ul style="margin-left:15px;">
+           <li>Most respondents show moderate to high agreement (levels 3 to 5) across all impulse buying indicators.</li>
+           <li>The highest concentration of responses appears at agreement levels 4 and 5, especially for impulse purchase behavior.</li>
+           <li>This pattern indicates that many purchases on TikTok Shop are made without prior planning or strong purchase intent.</li>
+           <li>Overall, the visualization highlights impulse buying as a common behavior among users, supporting the study’s focus on spontaneous purchasing in social commerce.</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
     else:
         st.warning(f"Missing purchase columns: {missing_cols}")
                      
