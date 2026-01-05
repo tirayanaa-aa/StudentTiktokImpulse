@@ -1,12 +1,13 @@
 import streamlit as st
 
-# --------------------------------------------------
-# Page Configuration
-# --------------------------------------------------
-st.set_page_config(
-    page_title="TikTok Shop Impulse Buying Visualization",
-    layout="wide"
-)
+def app():
+    # --------------------------------------------------
+    # Page Configuration
+    # --------------------------------------------------
+    st.set_page_config(
+        page_title="TikTok Shop Impulse Buying Visualization",
+        layout="wide"
+    )
 
 # --------------------------------------------------
 # Title
