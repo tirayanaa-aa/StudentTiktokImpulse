@@ -123,35 +123,29 @@ def app():
             title='Correlation Matrix'
         )
         st.plotly_chart(fig2, use_container_width=True)
-         # =========================
-         # INTERPRETATION (Natural & Student-Style)
-         # =========================
+        # -------------------------
+        # INTERPRETATION / INSIGHTS
+        # -------------------------
         st.markdown("""
         <div style="
-           background-color:#f9f9f9;
-           padding:16px;
-           border-left:5px solid #4b7bec;
-           border-radius:8px;
-           margin-top:10px;
+            background-color:#f8fafc;
+            padding:16px;
+            border-left:6px solid #6366f1;
+            border-radius:10px;
+            box-shadow:0 2px 6px rgba(0,0,0,0.05);
+            margin-top:10px;
         ">
-         <h4>🔍 Interpretation</h4>
+        <h4 style="margin-bottom:8px;">📌 Key Insights</h4>
 
-         <ul>
-             <li><b>Shopping Lifestyle (SL)</b> shows a moderate positive relationship with 
-             <b>Product Presentation (PP)</b>, suggesting that students who enjoy shopping are more responsive 
-              to how products are visually presented.</li>
-
-             <li>The relationship between <b>Shopping Lifestyle and Impulse Buying (OIB)</b> is also noticeable, 
-             indicating that lifestyle tendencies contribute to spontaneous purchasing behavior.</li>
-
-             <li><b>Product Presentation</b> has a weaker correlation with <b>Impulse Buying</b>, which implies 
-             that visual appeal alone is not enough to strongly trigger impulse purchases.</li>
-
-             <li>Overall, impulse buying behavior among students appears to be influenced by 
-             <b>a combination of personal lifestyle and product presentation factors</b>, rather than a single factor.</li>
+        <ul style="margin-left:15px;">
+            <li>Shopping lifestyle shows a positive relationship with product presentation, indicating that students who enjoy shopping are more responsive to visual and informational cues.</li>
+            <li>Product presentation has a weak to moderate correlation with impulse buying, suggesting that attractive visuals alone may not always trigger impulsive purchases.</li>
+            <li>Shopping lifestyle demonstrates a stronger association with impulse buying compared to product presentation.</li>
+            <li>This pattern highlights that personal shopping habits play a more influential role in impulse buying behaviour on TikTok Shop.</li>
         </ul>
         </div>
          """, unsafe_allow_html=True)
+
     else:
         st.warning(f"Missing columns for correlation: {missing_cols}")
 
