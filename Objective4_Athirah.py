@@ -15,10 +15,10 @@ def app():
     ### 🎯 Sub-Objective
     To analyze how product appearance, personal shopping lifestyle, and impulse buying tendencies influence spontaneous purchasing behavior on TikTok Shop.
 
-    ### 🧩 Problem Statement
+    ### Problem Statement
     Impulse buying is a significant outcome in social commerce platforms. However, the influence of product presentation and individual shopping lifestyle on impulse buying behavior is not always clearly understood, requiring visual analytics to uncover underlying patterns and relationships.
 
-    ### 📋 Relevant Questionnaire Sections
+    ### Relevant Questionnaire Sections
     - **Section 7:** Personal Shopping Lifestyle (SL)  
     - **Section 8:** Product Appearance and Description (PP)  
     - **Section 9:** Impulse Buying Behavior (OIB)
@@ -82,6 +82,26 @@ def app():
             title='Product Presentation vs Impulse Buying'
         )
         st.plotly_chart(fig1, use_container_width=True)
+        st.markdown("""
+        <div style="
+            background-color:#f8fafc;
+            padding:16px;
+            border-left:6px solid #6366f1;
+            border-radius:10px;
+            box-shadow:0 2px 6px rgba(0,0,0,0.05);
+            margin-top:10px;
+        ">
+        <h4 style="margin-bottom:8px;">📌 Key Insights</h4>
+
+        <ul style="margin-left:15px;">
+            <li>The scatter plot shows a positive relationship between product presentation and impulse buying behavior.</li>
+            <li>Higher product presentation scores are generally associated with higher impulse buying scores.</li>
+            <li>Most respondents fall within the medium to high score range, indicating strong visual influence.</li>
+            <li>The spread of data points suggests that impulse buying is also affected by other personal or situational factors.</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
     else:
         st.warning("PP_score or OIB_score column missing in dataset!")
 
