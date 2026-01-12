@@ -1,4 +1,9 @@
 import streamlit as st
+import main
+import Objective1_Aina
+import Objective2_Nurin
+import Objective3_Nadia
+import Objective4_Athirah
 
 # --------------------------------------------------
 # Page Configuration
