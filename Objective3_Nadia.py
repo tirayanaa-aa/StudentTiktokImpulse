@@ -27,14 +27,16 @@ def app():
     - **Section 6:** Fun and Motivation in Shopping (HM)
     """)
 
-    # --------------------------------------------------
-    # Load dataset
-    # --------------------------------------------------
+    
+    # ==================================================
+    # LOAD DATASET
+    # ==================================================
     df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
 
-    # --------------------------------------------------
-    # Define factor groups
-    # --------------------------------------------------
+    
+    # ==================================================
+    # DEFINE FACTORS GROUPS
+    # ==================================================
     trust_items = [
         'trust_no_risk',
         'trust_reliable',
@@ -49,18 +51,20 @@ def app():
         'motivated_by_gifts'
     ]
 
-    # --------------------------------------------------
-    # Create composite scores
-    # --------------------------------------------------
+
+    # ==================================================
+    # CREATE COMPOSITE SCORES
+    # ==================================================
     df['Trust_Score'] = df[trust_items].mean(axis=1)
     df['Motivation_Score'] = df[motivation_items].mean(axis=1)
 
      # 🔧 SAFETY: remove missing values (important)
     df = df.dropna(subset=['Trust_Score', 'Motivation_Score'])
 
-    # --------------------------------------------------
-    # Summary Metrics
-    # --------------------------------------------------
+
+    # ==================================================
+    # SUMMARY METRICS
+    # ==================================================
     st.markdown("## 📊 Summary Metrics")
     metric_cols = ['Trust_Score', 'Motivation_Score']
     missing_cols = [c for c in metric_cols if c not in df.columns]
@@ -76,9 +80,9 @@ def app():
         st.warning(f"Missing columns for summary metrics: {missing_cols}")
 
     
-    # --------------------------------------------------
-    # 1️⃣ Correlation Heatmap
-    # --------------------------------------------------
+    # ==================================================
+    # 1️⃣ CORRELATION HEATMAP
+    # ==================================================
     st.markdown("### 1️⃣ Correlation Between Trust & Motivation Items")
     
     corr_items = trust_items + motivation_items
@@ -121,11 +125,11 @@ def app():
          """, unsafe_allow_html=True)
     else:
         st.warning(f"Missing columns for correlation: {missing_corr}")
+        
 
-
-    # --------------------------------------------------
-    # 2️⃣ Bar Chart – Trust Items
-    # --------------------------------------------------
+    # ==================================================
+    # 2️⃣ BAR CHART - TRUST ITEMS
+    # ==================================================
     st.markdown("### 2️⃣ Average Trust Scores by Item")
     
     missing_trust = [c for c in trust_items if c not in df.columns]
@@ -168,10 +172,10 @@ def app():
     else:
         st.warning(f"Missing trust columns: {missing_trust}")
 
-        
-    # --------------------------------------------------
-    # 3️⃣ Box Plot – Trust Responses
-    # --------------------------------------------------
+    
+    # ==================================================
+    # 3️⃣ BOX PLOT - TRUST RESPONSES
+    # ==================================================
     st.markdown("### 3️⃣ Distribution of Trust Responses")
     if not missing_trust:
         trust_long = df[trust_items].melt(var_name='Trust Item', value_name='Response')
@@ -201,9 +205,10 @@ def app():
         </div>
          """, unsafe_allow_html=True)
 
-    # --------------------------------------------------
-    # 4️⃣ Bar Chart – Motivation Items
-    # --------------------------------------------------
+
+    # ==================================================
+    # 4️⃣ BAR CHART - MOTIVATION ITEMS
+    # ==================================================
     st.markdown("### 4️⃣ Average Motivation Scores by Item")
     missing_mot = [c for c in motivation_items if c not in df.columns]
     if not missing_mot:
@@ -235,9 +240,10 @@ def app():
         </div>
          """, unsafe_allow_html=True)
 
-    # --------------------------------------------------
-    # 5️⃣ Scatter Plot – Trust vs Motivation (with trendline)
-    # --------------------------------------------------
+
+    # ==================================================
+    # 5️⃣ SCATTER PLOT - TRUST vs MOTIVATION (WITH TRENDLINE)
+    # ==================================================
     st.markdown("### 5️⃣ Relationship Between Trust and Motivation")
     if 'Trust_Score' in df.columns and 'Motivation_Score' in df.columns:
         fig5 = px.scatter(
@@ -280,9 +286,10 @@ def app():
         </div>
          """, unsafe_allow_html=True)
 
-    # --------------------------------------------------
-    # 6️⃣ Radar Chart – Trust Dimensions
-    # --------------------------------------------------
+
+    # ==================================================
+    # 6️⃣ RADAR CHART - TRUST DIMENSIONS
+    # ==================================================
     st.markdown("### 6️⃣ Trust Dimension Radar Chart")
     if not missing_trust:
         import matplotlib.pyplot as plt
