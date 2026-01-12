@@ -157,7 +157,7 @@ The dataset was collected through an online questionnaire distributed to univers
 - Calculation of composite scores for key constructs
 """)
 
-st.markdown(st.markdown("""
+st.markdown("""
 **Dataset Summary:**
 - Total Respondents: **113 students**
 - Total Variables: **43 variables**
