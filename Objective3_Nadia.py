@@ -316,7 +316,7 @@ def app():
         values = trust_means['Mean Score'].tolist()
         values += values[:1]  # complete loop
         angles = np.linspace(0, 2 * np.pi, len(labels)+1)
-        fig6, ax = plt.subplots(figsize=(3,4), subplot_kw=dict(polar=True))
+        fig6, ax = plt.subplots(figsize=(8,8), subplot_kw=dict(polar=True))
         ax.plot(angles, values, linewidth=2)
         ax.fill(angles, values, alpha=0.25)
         ax.set_thetagrids(angles[:-1] * 180/np.pi, labels)
