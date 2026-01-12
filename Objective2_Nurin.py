@@ -48,11 +48,9 @@ def app():
 
     st.write("""
     **Interpretation:**  
-    The correlation heatmap indicates a moderate positive relationship (r = 0.55) 
-    between scarcity and serendipity. This suggests that scarcity cues may encourage 
-    students to explore products more actively, increasing the likelihood of 
-    discovering unexpected items. However, the relationship is not strong, indicating 
-    that both factors influence shopping behaviour independently.
+    - The heatmap shows a moderate positive correlation (r = 0.55) between scarcity and serendipity.
+    - Scarcity cues increase product exploration and unexpected discovery.
+    - The moderate strength indicates both factors also act independently in influencing shopping behaviour.
     """)
 
     # ==================================================
@@ -97,11 +95,9 @@ def app():
 
     st.write("""
     **Interpretation:**  
-    The results indicate that scarcity and serendipity influence shopping behaviour 
-    differently across income groups. Students earning under RM100 are more sensitive 
-    to scarcity cues such as limited-time offers, while students in the RM100–RM300 
-    group exhibit the highest serendipity scores, suggesting stronger influence from 
-    unexpected product discovery.
+    - Scarcity and serendipity influence shopping behaviour differently across income groups.
+    - Students earning under RM100 are more sensitive to scarcity cues.
+    - Students in the RM100–RM300 group show the highest serendipity influence, driven by unexpected product discovery.
     """)
 
     # ==================================================
@@ -138,10 +134,9 @@ def app():
 
     st.write("""
     **Interpretation:**  
-    Both male and female students are influenced by scarcity and serendipity cues on 
-    TikTok Shop. Scarcity scores are similar across genders, indicating equal sensitivity 
-    to urgency-based marketing. However, male students show slightly higher serendipity 
-    scores, suggesting a greater tendency toward exploratory shopping behaviour.
+    - Both male and female students are influenced by scarcity and serendipity cues on TikTok Shop.
+    - Scarcity scores are similar across genders, indicating equal sensitivity to urgency-based marketing.
+    - Male students show slightly higher serendipity scores, suggesting a greater tendency toward exploratory shopping behaviour
     """)
 
     # ==================================================
@@ -164,9 +159,9 @@ def app():
 
     st.write("""
     **Interpretation:**  
-    The box plots show that both scarcity and serendipity scores are generally moderate 
-    to high. Median values lie in the upper-middle range, indicating that students 
-    frequently experience urgency and unexpected discovery when shopping on TikTok Shop.
+    - Box plots indicate that scarcity and serendipity scores are generally moderate to high.
+    - Median values fall in the upper-middle range, showing a consistent tendency across respondents.
+    - This suggests that students frequently experience urgency and unexpected product discovery when shopping on TikTok Shop.
     """)
 
     # ==================================================
@@ -196,8 +191,7 @@ def app():
 
     st.write("""
     **Interpretation:**  
-    The distributions indicate that scarcity scores are spread across the medium to high 
-    range, while serendipity scores are skewed toward higher values. This suggests that 
-    unexpected product discovery plays a significant role in shaping students’ shopping 
-    behaviour on TikTok Shop.
+    - Scarcity scores are distributed across the medium to high range.
+    - Serendipity scores are skewed toward higher values, indicating stronger influence.
+    - This suggests that unexpected product discovery plays a significant role in shaping students’ shopping behaviour on TikTok Shop.
     """)
