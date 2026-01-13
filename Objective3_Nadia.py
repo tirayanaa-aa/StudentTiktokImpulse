@@ -40,7 +40,7 @@ def app():
             "Select Gender",
             options=df['gender'].unique(),
             default=df['gender'].unique()
-    )
+        )
         df = df[df['gender'].isin(selected_gender)]
 
     if 'age_group' in df.columns:
@@ -48,7 +48,7 @@ def app():
             "Select Age Group",
             options=df['age_group'].unique(),
             default=df['age_group'].unique()
-    )
+        )
         df = df[df['age_group'].isin(selected_age)]
 
     # ==================================================
@@ -88,12 +88,12 @@ def app():
             label="Average Trust Score",
             value=f"{df['Trust_Score'].mean():.2f}",
             delta=f"{df['Trust_Score'].max() - df['Trust_Score'].min():.2f} range"
-    )
+        )
         col2.metric(
             label="Average Motivation Score",
             value=f"{df['Motivation_Score'].mean():.2f}",
             delta=f"{df['Motivation_Score'].max() - df['Motivation_Score'].min():.2f} range"
-    )
+        )
 
         summary_df = df[metric_cols].describe().round(2)
         styled_df = summary_df.style.background_gradient(cmap='Blues', axis=1)
@@ -117,11 +117,10 @@ def app():
         ]
     )
 
-    
     # ==================================================
     # 1️⃣ CORRELATION HEATMAP
     # ==================================================
-     if viz_option == "Correlation Heatmap":
+    if viz_option == "Correlation Heatmap":
         corr_items = trust_items + motivation_items
         missing_corr = [c for c in corr_items if c not in df.columns]
 
@@ -137,23 +136,19 @@ def app():
             )
             st.plotly_chart(fig1, use_container_width=True)
 
-        # -------------------------
-        # INTERPRETATION / INSIGHTS
-        # -------------------------
-        with st.expander("📌 Key Insights"):
+            with st.expander("📌 Key Insights"):
                 st.markdown("""
                 - Trust-related items show strong internal consistency.
                 - Promotional incentives are strongly associated with motivation.
                 - Trust supports motivation rather than directly driving impulse buying.
                 """)
-    else:
-        st.warning(f"Missing columns for correlation: {missing_corr}")
-        
+        else:
+            st.warning(f"Missing columns for correlation: {missing_corr}")
 
     # ==================================================
-    # 2️⃣ BAR CHART - TRUST ITEMS
+    # 2️⃣ TRUST BAR CHART
     # ==================================================
-     if viz_option == "Trust Bar Chart":
+    if viz_option == "Trust Bar Chart":
         st.markdown("### 🎛 Select Trust Dimensions")
         selected_trust_items = st.multiselect(
             "Choose trust items to analyze:",
@@ -175,9 +170,6 @@ def app():
         )
         st.plotly_chart(fig2, use_container_width=True)
 
-        # -------------------------
-        # INTERPRETATION / INSIGHTS
-        # -------------------------
         with st.expander("📌 Key Insights"):
             st.markdown("""
             - Overall, trust levels are positive.
@@ -186,18 +178,14 @@ def app():
             - "No risk" is slightly lower, suggesting room for improvement.
             """)
 
-    
     # ==================================================
-    # 3️⃣ BOX PLOT - TRUST RESPONSES
+    # 3️⃣ TRUST BOX PLOT
     # ==================================================
     if viz_option == "Trust Box Plot":
         trust_long = df[trust_items].melt(var_name='Trust Item', value_name='Response')
         fig3 = px.box(trust_long, x='Trust Item', y='Response', points='all', title='Trust Item Response Distribution')
         st.plotly_chart(fig3, use_container_width=True)
 
-        # -------------------------
-        # INTERPRETATION / INSIGHTS
-        # -------------------------
         with st.expander("📌 Key Insights"):
             st.markdown("""
             - Most trust items have median responses between 3 and 4.
@@ -205,29 +193,24 @@ def app():
             - Seller honesty and product description accuracy are consistent.
             """)
 
-
     # ==================================================
-    # 4️⃣ BAR CHART - MOTIVATION ITEMS
+    # 4️⃣ MOTIVATION BAR CHART
     # ==================================================
     if viz_option == "Motivation Bar Chart":
-            mot_means = df[motivation_items].mean().reset_index()
-            mot_means.columns = ['Motivation Item', 'Mean Score']
-            fig4 = px.bar(mot_means, x='Motivation Item', y='Mean Score', title="Average Motivation Scores")
-            st.plotly_chart(fig4, use_container_width=True)
+        mot_means = df[motivation_items].mean().reset_index()
+        mot_means.columns = ['Motivation Item', 'Mean Score']
+        fig4 = px.bar(mot_means, x='Motivation Item', y='Mean Score', title="Average Motivation Scores")
+        st.plotly_chart(fig4, use_container_width=True)
 
-        # -------------------------
-        # INTERPRETATION / INSIGHTS
-        # -------------------------
-         with st.expander("📌 Key Insights"):
-                st.markdown("""
-                - Discounts and promotions are the strongest motivators.
-                - Gifts also play a meaningful role.
-                - Relaxation and stress reduction show moderate motivation.
-                """)
-
+        with st.expander("📌 Key Insights"):
+            st.markdown("""
+            - Discounts and promotions are the strongest motivators.
+            - Gifts also play a meaningful role.
+            - Relaxation and stress reduction show moderate motivation.
+            """)
 
     # ==================================================
-    # 5️⃣ SCATTER PLOT - TRUST vs MOTIVATION (WITH TRENDLINE)
+    # 5️⃣ SCATTER PLOT
     # ==================================================
     if viz_option == "Trust vs Motivation Scatter":
         show_trendline = st.checkbox("Show Trend Line", value=True)
@@ -250,10 +233,6 @@ def app():
 
         st.plotly_chart(fig5, use_container_width=True)
 
-
-        # -------------------------
-        # INTERPRETATION / INSIGHTS
-        # -------------------------
         with st.expander("📌 Key Insights"):
             st.markdown("""
             - Positive relationship between trust and motivation.
@@ -261,9 +240,8 @@ def app():
             - Trend line shows steady increase.
             """)
 
-
     # ==================================================
-    # 6️⃣ RADAR CHART - TRUST DIMENSIONS
+    # 6️⃣ RADAR CHART
     # ==================================================
     if viz_option == "Trust Radar Chart":
         labels = trust_items
@@ -277,10 +255,7 @@ def app():
         ax.set_thetagrids(angles[:-1] * 180/np.pi, labels)
         st.pyplot(fig6)
 
-        # -------------------------
-        # INTERPRETATION / INSIGHTS
-        # -------------------------
-         with st.expander("📌 Key Insights"):
+        with st.expander("📌 Key Insights"):
             st.markdown("""
             - Trust is strong across all dimensions.
             - Product variety and quality are highest.
