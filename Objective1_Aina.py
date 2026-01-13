@@ -115,7 +115,7 @@ def app():
         y=crosstab_df.columns[1:], # Selects experience categories (e.g., Yes/No)
         title='TikTok Shop Experience by Gender (Stacked Bar Chart)',
         labels={'gender': 'Gender', 'value': 'Count', 'variable': 'Experience'},
-        color_discrete_sequence=px.colors.qualitative.Bold,
+        color_discrete_sequence=px.colors.qualitative.Set2,
         barmode='stack'
     )
     
