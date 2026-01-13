@@ -33,7 +33,6 @@ def app():
     </ul>
     """, unsafe_allow_html=True)
     
-
     # ==================================================
     # LOAD DATASET
     # ==================================================
@@ -189,31 +188,54 @@ def app():
             # -------------------------
             # INTERPRETATION / INSIGHTS
             # -------------------------
-            st.markdown("""
-            <div style="
-                background-color:#f8fafc;
-                padding:16px;
-                border-left:6px solid #6366f1;
-                border-radius:10px;
-                box-shadow:0 2px 6px rgba(0,0,0,0.05);
-                margin-top:10px;
-            ">
-            <h4 style="margin-bottom:8px;">📌 Key Insights</h4>
-            <ul style="margin-left:15px;">
-                <li>Trust-related items show moderate to strong positive correlations among themselves, particularly between honesty and quality matching the product description.</li>
-                <li>Motivation factors such as discounts and gifts are also strongly correlated, showing consistent promotional influence.</li>
-                <li>Some trust items show moderate positive relationships with motivation variables, suggesting that higher trust is associated with increased shopping motivation.</li>
-                <li>Correlations between trust and motivation are generally weaker than within each construct, indicating that trust supports motivation rather than directly driving it.</li>
-            </ul>
-            </div>
-            """, unsafe_allow_html=True)
+            with st.expander("📌 Key Insights - Correlation Heatmap"):
+                st.markdown("""
+                <ul style="margin-left:15px;">
+                    <li>Trust-related items show moderate to strong positive correlations among themselves, particularly between honesty and quality matching the product description.</li>
+                    <li>Motivation factors such as discounts and gifts are also strongly correlated, showing consistent promotional influence.</li>
+                    <li>Some trust items show moderate positive relationships with motivation variables, suggesting that higher trust is associated with increased shopping motivation.</li>
+                    <li>Correlations between trust and motivation are generally weaker than within each construct, indicating that trust supports motivation rather than directly driving it.</li>
+                </ul>
+                """, unsafe_allow_html=True)
 
     
     # ==================================================
     # 2️⃣ TRUST BAR CHART
     # ==================================================
     if viz_option == "Trust Bar Chart":
-        plot_bar(df, selected_trust_items, "Average Trust Scores")
+        st.markdown("### 🎛 Select Trust Dimensions")
+        selected_trust_items = st.multiselect(
+            "Choose trust items to analyze:",
+            options=trust_items,
+            default=trust_items
+        )
+        if not selected_trust_items:
+            st.warning("Please select at least one trust item.")
+            selected_trust_items = trust_items
+    
+        trust_means = df[selected_trust_items].mean().reset_index()
+        trust_means.columns = ['Trust Item', 'Mean Score']
+    
+        fig2 = px.bar(
+            trust_means,
+            x='Trust Item',
+            y='Mean Score',
+            title="Average Trust Scores"
+        )
+        st.plotly_chart(fig2, use_container_width=True)
+    
+        # -------------------------
+        # INTERPRETATION / INSIGHTS
+        # -------------------------
+        with st.expander("📌 Key Insights - Trust Bar Chart"):
+            st.markdown("""
+            <ul style="margin-left:15px;">
+                <li>Overall, trust levels are positive, with all items scoring above the midpoint, indicating customers generally feel confident about the brand.</li>
+                <li>Product variety is the strongest area, suggesting the offerings align well with customer expectations.</li>
+                <li>Trust in reliability, honesty, and quality matching the description is also solid, reflecting consistent experiences.</li>
+                <li>The slightly lower score for "no risk" suggests some minor concerns that could be addressed through clearer guarantees or communication.</li>
+            </ul>
+            """, unsafe_allow_html=True)
 
     # ==================================================
     # 3️⃣ TRUST BOX PLOT
