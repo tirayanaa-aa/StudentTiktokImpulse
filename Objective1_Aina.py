@@ -31,91 +31,81 @@ def app():
         return
 
     # --------------------------------------------------
-    # MAIN PAGE FILTERS (Defined BEFORE use)
+    # MAIN PAGE FILTER (Age Group Only)
     # --------------------------------------------------
     st.divider()
     st.subheader("Filter Dataset")
     
-    # 1. DEFINE COLUMN NAMES FIRST to avoid UnboundLocalError
     gender_col = 'gender'
     age_col = 'age' 
 
-    # 2. Create two columns for the filter widgets
-    col1, col2 = st.columns(2)
-
-    with col1:
-        gender_list = ["All"] + sorted(df[gender_col].dropna().unique().tolist())
-        selected_gender = st.selectbox("Select Gender", gender_list)
-
-    with col2:
-        age_list = ["All"] + sorted(df[age_col].dropna().unique().tolist())
-        selected_age = st.selectbox("Select Age Group", age_list)
+    # Only one filter for Age Group
+    age_list = ["All"] + sorted(df[age_col].dropna().unique().tolist())
+    selected_age = st.selectbox("Select Age Group to Filter Demographic Profile", age_list)
 
     # --------------------------------------------------
-    # Data Filtering Logic
+    # Filtering Logic for Pie Chart
     # --------------------------------------------------
-    filtered_df = df.copy()
-
-    if selected_gender != "All":
-        filtered_df = filtered_df[filtered_df[gender_col] == selected_gender]
-    
+    # We apply the age filter here for the Pie Chart segment
     if selected_age != "All":
-        filtered_df = filtered_df[filtered_df[age_col] == selected_age]
+        pie_df = df[df[age_col] == selected_age]
+    else:
+        pie_df = df.copy()
 
     # --------------------------------------------------
-    # Visualizations
+    # 1. GENDER PIE CHART (Filtered by Age)
     # --------------------------------------------------
     st.divider()
+    st.subheader("Gender Distribution")
     
-    if filtered_df.empty:
-        st.warning(f"No data found for Gender: **{selected_gender}** and Age: **{selected_age}**.")
+    if pie_df.empty:
+        st.warning(f"No data found for Age: **{selected_age}**.")
     else:
-        # 1. GENDER PIE CHART
-        st.subheader("Gender Distribution")
-        gender_counts = filtered_df[gender_col].value_counts().reset_index()
+        gender_counts = pie_df[gender_col].value_counts().reset_index()
         gender_counts.columns = [gender_col, 'count']
 
         fig1 = px.pie(
             gender_counts, 
             values='count', 
             names=gender_col, 
-            title=f"Gender Proportion (Filtered by Age: {selected_age})",
+            title=f"Gender Proportion for Age Group: {selected_age}",
             color_discrete_sequence=px.colors.qualitative.Pastel,
             hole=0.4
         )
         st.plotly_chart(fig1, use_container_width=True)
         
-        # Pie Chart Interpretation
-        total_n = len(filtered_df)
+        # Dynamic Interpretation
+        total_n = len(pie_df)
         top_gender = gender_counts.iloc[0][gender_col]
         percentage = (gender_counts.iloc[0]['count'] / total_n) * 100
 
-        st.info(f"**Interpretation:** The filtered data (n={total_n}) is dominated by **{top_gender}s**, representing **{percentage:.1f}%** of the selection.")
+        st.info(f"**Interpretation:** For the **{selected_age}** group, the population is dominated by **{top_gender}s** ({percentage:.1f}%).")
 
-        # --------------------------------------------------
-        # 2. AGE GROUP HISTOGRAM
-        # --------------------------------------------------
-        st.divider()
-        st.subheader("Usage by Age")
-        
-        age_order = ['17 - 21 years old', '22 - 26 years old', '27 - 31 years old']
-        
-        fig2 = px.histogram(
-            filtered_df, 
-            x=age_col, 
-            color='tiktok_shop_experience',
-            barmode='group',
-            category_orders={age_col: age_order},
-            color_discrete_sequence=px.colors.qualitative.Bold,
-            title='TikTok Shop Usage across Age Groups'
-        )
-        st.plotly_chart(fig2, use_container_width=True)
+    # --------------------------------------------------
+    # 2. AGE GROUP HISTOGRAM (Independent/Full Data)
+    # --------------------------------------------------
+    st.divider()
+    st.subheader("Usage by Age (Overall Overview)")
+    
+    age_order = ['17 - 21 years old', '22 - 26 years old', '27 - 31 years old']
+    
+    # We use 'df' here instead of 'pie_df' so the histogram always shows the full trend
+    fig2 = px.histogram(
+        df, 
+        x=age_col, 
+        color='tiktok_shop_experience',
+        barmode='group',
+        category_orders={age_col: age_order},
+        color_discrete_sequence=px.colors.qualitative.Bold,
+        title='TikTok Shop Usage across All Age Groups'
+    )
+    st.plotly_chart(fig2, use_container_width=True)
 
-        st.write(f"""
-        **Interpretation:** This histogram displays usage patterns for the **{selected_gender}** demographic. 
-        Historically, the 22–26 years old group shows the highest activity. By filtering for **{selected_gender}**, 
-        you can see if this trend remains consistent across genders.
-        """)
+    st.write("""
+    **Interpretation:** The histogram provides an overall view of the dataset. 
+    The 22–26 years old group consistently shows the highest usage. This overview 
+    allows you to compare the specific age group selected above against the general population trend.
+    """)
 
 # Execute the app
 if __name__ == "__main__":
