@@ -3,10 +3,6 @@ import streamlit as st
 import pandas as pd
 
 
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-
 def app():
     # --------------------------------------------------
     # Header & Introduction
@@ -53,7 +49,7 @@ def app():
     # --------------------------------------------------
     # EXECUTIVE SUMMARY 📋
     # --------------------------------------------------
-    st.subheader("📋 Executive Summary")
+    st.subheader("📋 Summary")
     
     total_respondents = len(df)
     filtered_n = len(pie_df)
