@@ -18,6 +18,29 @@ def app():
     """)
 
     # --------------------------------------------------
+    # MAIN PAGE FILTERS (Structured in Columns)
+    # --------------------------------------------------
+    st.divider()
+    st.subheader("Filter Dataset")
+    
+    # Create two columns for the filters
+    col1, col2 = st.columns(2)
+
+    gender_col = 'gender'
+    age_col = 'age' 
+
+    with col1:
+        # Filter for Gender
+        gender_list = ["All"] + sorted(df[gender_col].dropna().unique().tolist())
+        selected_gender = st.selectbox("Select Gender", gender_list)
+
+    with col2:
+        # Filter for Age Group
+        age_list = ["All"] + sorted(df[age_col].dropna().unique().tolist())
+        selected_age = st.selectbox("Select Age Group", age_list)
+
+    
+    # --------------------------------------------------
     # Load and Clean Dataset
     # --------------------------------------------------
     try:
@@ -26,7 +49,6 @@ def app():
     except Exception as e:
         st.error(f"Error loading file: {e}")
         return
-
 
 
     # --------------------------------------------------
