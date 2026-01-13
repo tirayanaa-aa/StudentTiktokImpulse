@@ -3,6 +3,10 @@ import streamlit as st
 import pandas as pd
 
 
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+
 def app():
     st.header("Sub-Objective 1: Analyze the Demographic Profile and TikTok Shop Usage")
 
@@ -21,34 +25,30 @@ def app():
     # --------------------------------------------------
     try:
         df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
-        
-        # CLEANING STEP: Remove leading/trailing spaces from column names
-        df.columns = df.columns.str.strip()
-        
-        # DEBUG (Optional): Uncomment the line below to see all column names if error persists
-        # st.write("Available columns:", df.columns.tolist())
-
+        df.columns = df.columns.str.strip() # Remove hidden spaces
     except Exception as e:
         st.error(f"Error loading file: {e}")
         return
 
     # --------------------------------------------------
-    # Sidebar Filter Options
+    # MAIN PAGE FILTERS (Structured in Columns)
     # --------------------------------------------------
-    st.sidebar.header("Filter Options")
+    st.divider()
+    st.subheader("Filter Dataset")
+    
+    # Create two columns for the filters
+    col1, col2 = st.columns(2)
 
-    # Use the actual column names from your CSV. 
-    # If they are different (e.g., 'Age' instead of 'age_group'), change these variables:
     faculty_col = 'faculty'
     age_col = 'age' 
 
-    # Faculty Filter
-    faculty_list = ["All"] + sorted(df[faculty_col].dropna().unique().tolist())
-    selected_faculty = st.sidebar.selectbox("Select Faculty", faculty_list)
+    with col1:
+        faculty_list = ["All"] + sorted(df[faculty_col].dropna().unique().tolist())
+        selected_faculty = st.selectbox("Select Faculty", faculty_list)
 
-    # Age Group Filter
-    age_list = ["All"] + sorted(df[age_col].dropna().unique().tolist())
-    selected_age = st.sidebar.selectbox("Select Age Group", age_list)
+    with col2:
+        age_list = ["All"] + sorted(df[age_col].dropna().unique().tolist())
+        selected_age = st.selectbox("Select Age Group", age_list)
 
     # --------------------------------------------------
     # Data Filtering Logic
@@ -67,9 +67,9 @@ def app():
     st.divider()
     
     if filtered_df.empty:
-        st.warning("No data found for the selected filters.")
+        st.warning(f"No data found for Faculty: **{selected_faculty}** and Age: **{selected_age}**.")
     else:
-        st.subheader("Gender Distribution")
+        st.subheader("Gender Distribution Analysis")
         
         # Prepare Pie Chart Data
         gender_counts = filtered_df['gender'].value_counts().reset_index()
@@ -79,7 +79,7 @@ def app():
             gender_counts, 
             values='count', 
             names='gender', 
-            title=f"Gender Distribution for {selected_faculty} (Age: {selected_age})",
+            title=f"Gender Distribution (Faculty: {selected_faculty} | Age: {selected_age})",
             color_discrete_sequence=px.colors.qualitative.Pastel,
             hole=0.4
         )
@@ -91,9 +91,9 @@ def app():
         percentage = (gender_counts.iloc[0]['count'] / total_n) * 100
 
         st.info(f"""
-        **Interpretation:** The pie chart reveals that the respondent pool for the selected criteria 
-        is dominated by **{top_gender}s**, representing **{percentage:.1f}%** of the total (**n={total_n}**). 
-        This suggests that marketing efforts should be specifically tailored toward this demographic.
+        **Interpretation:** With the current filters applied, the respondent pool 
+        is dominated by **{top_gender}s**, representing **{percentage:.1f}%** of the filtered data (**n={total_n}**). 
+        This suggests that marketing efforts for this specific subset should be tailored toward the {top_gender} demographic.
         """)
 
 # Execute the app
