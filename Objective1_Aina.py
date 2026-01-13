@@ -3,10 +3,6 @@ import streamlit as st
 import pandas as pd
 
 
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-
 def app():
     st.header("Sub-Objective 1: Analyze the Demographic Profile and TikTok Shop Usage")
 
@@ -23,42 +19,59 @@ def app():
     # --------------------------------------------------
     # Load and Clean Dataset
     # --------------------------------------------------
-    df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
-    
-    # Standardize column names to avoid KeyErrors (removes spaces/caps)
-    df.columns = df.columns.str.strip().str.lower()
+    try:
+        df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
+        
+        # CLEANING STEP: Remove leading/trailing spaces from column names
+        df.columns = df.columns.str.strip()
+        
+        # DEBUG (Optional): Uncomment the line below to see all column names if error persists
+        # st.write("Available columns:", df.columns.tolist())
+
+    except Exception as e:
+        st.error(f"Error loading file: {e}")
+        return
 
     # --------------------------------------------------
-    # Sidebar Filters
+    # Sidebar Filter Options
     # --------------------------------------------------
     st.sidebar.header("Filter Options")
 
+    # Use the actual column names from your CSV. 
+    # If they are different (e.g., 'Age' instead of 'age_group'), change these variables:
+    faculty_col = 'faculty'
+    age_col = 'age_group' 
+
     # Faculty Filter
-    faculty_list = ["All"] + sorted(df['faculty'].unique().tolist())
+    faculty_list = ["All"] + sorted(df[faculty_col].dropna().unique().tolist())
     selected_faculty = st.sidebar.selectbox("Select Faculty", faculty_list)
 
     # Age Group Filter
-    age_list = ["All"] + sorted(df['age_group'].unique().tolist())
+    age_list = ["All"] + sorted(df[age_col].dropna().unique().tolist())
     selected_age = st.sidebar.selectbox("Select Age Group", age_list)
 
-    # Apply Filtering Logic
+    # --------------------------------------------------
+    # Data Filtering Logic
+    # --------------------------------------------------
     filtered_df = df.copy()
+
     if selected_faculty != "All":
-        filtered_df = filtered_df[filtered_df['faculty'] == selected_faculty]
+        filtered_df = filtered_df[filtered_df[faculty_col] == selected_faculty]
     
     if selected_age != "All":
-        filtered_df = filtered_df[filtered_df['age'] == selected_age]
+        filtered_df = filtered_df[filtered_df[age_col] == selected_age]
 
     # --------------------------------------------------
-    # Visualizations
+    # Visualizations & Dynamic Interpretation
     # --------------------------------------------------
-    st.divider() # Visual separation
-    st.subheader("Gender Distribution Analysis")
-
+    st.divider()
+    
     if filtered_df.empty:
-        st.warning("No data found for the selected filters. Please adjust your criteria.")
+        st.warning("No data found for the selected filters.")
     else:
-        # 1. Gender Pie Chart
+        st.subheader("Gender Distribution")
+        
+        # Prepare Pie Chart Data
         gender_counts = filtered_df['gender'].value_counts().reset_index()
         gender_counts.columns = ['gender', 'count']
 
@@ -66,27 +79,26 @@ def app():
             gender_counts, 
             values='count', 
             names='gender', 
-            title=f"Gender Distribution: {selected_faculty} (Age: {selected_age})",
+            title=f"Gender Distribution for {selected_faculty} (Age: {selected_age})",
             color_discrete_sequence=px.colors.qualitative.Pastel,
-            hole=0.4 # Converts pie to a Donut chart for a modern look
+            hole=0.4
         )
         st.plotly_chart(fig1, use_container_width=True)
-
-        # --------------------------------------------------
-        # Dynamic Interpretation
-        # --------------------------------------------------
-        # Calculate stats for the text
+        
+        # Automated Interpretation
         total_n = gender_counts['count'].sum()
         top_gender = gender_counts.iloc[0]['gender']
-        top_pct = (gender_counts.iloc[0]['count'] / total_n) * 100
+        percentage = (gender_counts.iloc[0]['count'] / total_n) * 100
 
         st.info(f"""
-        **Interpretation:** The analysis for the selected filters reveals that the respondent pool is dominated by **{top_gender}s**, 
-        representing **{top_pct:.1f}%** of the total (**n={total_n}**). This suggests that marketing 
-        efforts for this segment should be tailored specifically toward the {top_gender} demographic.
+        **Interpretation:** The pie chart reveals that the respondent pool for the selected criteria 
+        is dominated by **{top_gender}s**, representing **{percentage:.1f}%** of the total (**n={total_n}**). 
+        This suggests that marketing efforts should be specifically tailored toward this demographic.
         """)
 
-    # --------------------------------------------------
+# Execute the app
+if __name__ == "__main__":
+    app()
     
     # 2. Age Group Histogram
     st.subheader("Usage by Age")
