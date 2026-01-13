@@ -2,8 +2,8 @@ import plotly.express as px
 import streamlit as st
 import pandas as pd
 
+
 def app():
-    # Everything below this line is indented by 4 spaces
     st.header("Sub-Objective 1: Analyze the Demographic Profile and TikTok Shop Usage")
 
     # --------------------------------------------------
@@ -19,25 +19,65 @@ def app():
     # --------------------------------------------------
     # Load dataset
     # --------------------------------------------------
-    # Ensure this CSV file is in the same folder on GitHub
+    # Ensure this CSV file is in the same folder
     df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
 
-    # 1. Gender Pie Chart
-    st.subheader("Gender Distribution")
-    gender_counts = df['gender'].value_counts().reset_index()
-    gender_counts.columns = ['gender', 'count']
-
-    fig1 = px.pie(
-        gender_counts, 
-        values='count', 
-        names='gender', 
-        title='Distribution of Gender',
-        color_discrete_sequence=px.colors.qualitative.Pastel
-    )
-    st.plotly_chart(fig1, use_container_width=True)
+    # --------------------------------------------------
+    # SIDEBAR FILTERS
+    # --------------------------------------------------
+    st.sidebar.header("Filter Options")
     
-    # ADD INTERPRETATION HERE
-    st.write("Interpretation: The pie chart reveals that the respondent pool is dominated by [Gender], representing [Percentage]% of the total. This suggests that marketing efforts should be tailored toward this specific demographic.")
+    # Faculty Filter
+    faculty_list = ["All"] + sorted(df['faculty'].unique().tolist())
+    selected_faculty = st.sidebar.selectbox("Select Faculty", faculty_list)
+
+    # Age Group Filter
+    age_list = ["All"] + sorted(df['age_group'].unique().tolist())
+    selected_age = st.sidebar.selectbox("Select Age Group", age_list)
+
+    # Apply Filters to Dataframe
+    filtered_df = df.copy()
+    if selected_faculty != "All":
+        filtered_df = filtered_df[filtered_df['faculty'] == selected_faculty]
+    
+    if selected_age != "All":
+        filtered_df = filtered_df[filtered_df['age_group'] == selected_age]
+
+    # --------------------------------------------------
+    # 1. Gender Pie Chart
+    # --------------------------------------------------
+    st.subheader("Gender Distribution")
+    
+    if filtered_df.empty:
+        st.warning("No data available for the selected filters.")
+    else:
+        gender_counts = filtered_df['gender'].value_counts().reset_index()
+        gender_counts.columns = ['gender', 'count']
+
+        fig1 = px.pie(
+            gender_counts, 
+            values='count', 
+            names='gender', 
+            title=f'Gender Distribution for {selected_faculty} Faculty',
+            color_discrete_sequence=px.colors.qualitative.Pastel
+        )
+        st.plotly_chart(fig1, use_container_width=True)
+        
+        # --------------------------------------------------
+        # DYNAMIC INTERPRETATION
+        # --------------------------------------------------
+        # Calculate dynamic values for the interpretation text
+        total_responses = gender_counts['count'].sum()
+        top_gender = gender_counts.iloc[0]['gender']
+        top_count = gender_counts.iloc[0]['count']
+        percentage = (top_count / total_responses) * 100
+
+        st.info(f"""
+        **Interpretation:** The pie chart reveals that for the selected criteria (**Faculty: {selected_faculty}** and **Age: {selected_age}**), 
+        the respondent pool is dominated by **{top_gender}s**, representing **{percentage:.1f}%** ({top_count} out of {total_responses}) of the total subset. 
+        This suggests that marketing efforts within this specific segment should be 
+        heavily tailored toward the **{top_gender}** demographic to maximize engagement.
+        """)
 
     # --------------------------------------------------
 
