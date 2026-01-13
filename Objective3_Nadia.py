@@ -247,25 +247,55 @@ def app():
             - Trend line shows steady increase.
             """)
 
+
     # ==================================================
-    # 6️⃣ RADAR CHART
+    # 6️⃣ RADAR CHART - INTERACTIVE (USING PLOTLY)
     # ==================================================
     if viz_option == "Trust Radar Chart":
-        labels = trust_items
-        values = df[selected_trust_items].mean().tolist()
-        values += values[:1]  # complete loop
-        angles = np.linspace(0, 2 * np.pi, len(labels)+1)
-
-        fig6, ax = plt.subplots(figsize=(5,5), subplot_kw=dict(polar=True))
-        ax.plot(angles, values, linewidth=2)
-        ax.fill(angles, values, alpha=0.25)
-        ax.set_thetagrids(angles[:-1] * 180/np.pi, labels)
-        st.pyplot(fig6)
-
+        st.markdown("### 🎛 Select Trust Dimensions for Radar Chart")
+        selected_trust_items = st.multiselect(
+            "Choose trust items to include in the radar chart:",
+            options=trust_items,
+            default=trust_items
+        )
+    
+        if not selected_trust_items:
+            st.warning("Please select at least one trust item.")
+            selected_trust_items = trust_items
+    
+        # Prepare data for radar
+        radar_df = pd.DataFrame({
+            'Trust Item': selected_trust_items,
+            'Average Score': df[selected_trust_items].mean().values
+        })
+    
+        # Complete the loop for radar chart
+        radar_df = radar_df.append(radar_df.iloc[0], ignore_index=True)
+    
+        fig_radar = px.line_polar(
+            radar_df,
+            r='Average Score',
+            theta='Trust Item',
+            line_close=True,
+            markers=True,
+            title="Interactive Radar Chart of Trust Dimensions"
+        )
+    
+        fig_radar.update_traces(fill='toself')  # fill area under curve
+        fig_radar.update_layout(
+            polar=dict(
+                radialaxis=dict(range=[0, 5], visible=True, tickvals=[1,2,3,4,5]),
+            ),
+            showlegend=False
+        )
+    
+        st.plotly_chart(fig_radar, use_container_width=True)
+    
+        # Key insights
         with st.expander("📌 Key Insights"):
             st.markdown("""
-            - Trust is strong across all dimensions.
-            - Product variety and quality are highest.
+            - Trust is strong across all selected dimensions.
+            - Product variety and quality are usually the highest.
             - Honesty and reliability are positive.
-            - "No risk" is slightly lower, indicating room for reassurance.
+            - "No risk" may be lower, suggesting room for reassurance.
             """)
