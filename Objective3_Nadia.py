@@ -4,26 +4,34 @@ import plotly.express as px
 import numpy as np
 
 def app():
+    # ==================================================
+    # MAIN TITLE
+    # ==================================================
     st.subheader("Students' Impulse Buying Behavior on TikTok Shop")
+    
+    # Add spacing
+    st.markdown("<br><br>", unsafe_allow_html=True)
 
     # ==================================================
-    # SUB-OBJECTIVE & CONTEXT
+    # SUB-OBJECTIVE & CONTEXT (CENTERED)
     # ==================================================
     st.markdown("""
-    ## 📌 Sub-Objective 3: Examine Trust, Enjoyment & Shopping Motivation on TikTok Shop
+    <h2 style='text-align: center;'>📌 Sub-Objective 3: Examine Trust, Enjoyment & Shopping Motivation on TikTok Shop</h2>
+    <br>
+    <h4>🎯 Sub-Objective</h4>
+    <p>To investigate the role of trust, enjoyment, and motivation in shaping users’ shopping experiences on TikTok Shop.</p>
 
-    ### 🎯 Sub-Objective
-    To investigate the role of trust, enjoyment, and motivation in shaping users’ shopping experiences on TikTok Shop.
-
-    ### 🧩 Problem Statement
-    Trust and enjoyment are critical psychological factors influencing online shopping decisions. 
+    <h4>🧩 Problem Statement</h4>
+    <p>Trust and enjoyment are critical psychological factors influencing online shopping decisions. 
     A lack of consumer trust or low enjoyment levels may negatively affect purchasing behavior. 
-    Therefore, visually analyzing these constructs can help identify patterns and insights in users’ shopping experiences on TikTok Shop.
+    Therefore, visually analyzing these constructs can help identify patterns and insights in users’ shopping experiences on TikTok Shop.</p>
     
-    ### 📋 Relevant Questionnaire Sections
-    - **Section 5:** Trust in TikTok Shop (TR)  
-    - **Section 6:** Fun and Motivation in Shopping (HM)
-    """)
+    <h4>📋 Relevant Questionnaire Sections</h4>
+    <ul>
+        <li><b>Section 5:</b> Trust in TikTok Shop (TR)</li>
+        <li><b>Section 6:</b> Fun and Motivation in Shopping (HM)</li>
+    </ul>
+    """, unsafe_allow_html=True)
 
     # ==================================================
     # LOAD DATASET
