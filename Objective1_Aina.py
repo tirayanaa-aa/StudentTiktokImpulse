@@ -101,25 +101,48 @@ def app():
 # Execute the app
 if __name__ == "__main__":
     app()
-    
-    # 2. Age Group Histogram
+  # --------------------------------------------------
+    # 2. Age Group Histogram (Using Filters)
+    # --------------------------------------------------
+    st.divider()
     st.subheader("Usage by Age")
-    age_order = ['17 - 21 years old', '22 - 26 years old', '27 - 31 years old']
-    fig2 = px.histogram(
-        df, 
-        x='age', 
-        color='tiktok_shop_experience',
-        barmode='group',
-        category_orders={'age': age_order},
-        color_discrete_sequence=px.colors.qualitative.Bold,
-        title='TikTok Shop Usage across Age Groups'
-    )
-    st.plotly_chart(fig2, use_container_width=True)
 
-    st.write("""
-    Interpretation:  
-    The bar chart reveals that the 22–26 years old age group has the highest TikTok Shop usage, with a count of approximately 80 respondents. In contrast, usage is significantly lower among the 17–21 and 27–31 age groups, indicating that the platform's shopping features are most popular among young adults in their mid-twenties.
-    """)
+    if filtered_df.empty:
+        st.warning("No data found for the selected filters to display the usage chart.")
+    else:
+        # Define the logical order for age groups
+        age_order = ['17 - 21 years old', '22 - 26 years old', '27 - 31 years old']
+        
+        # We use filtered_df here so the histogram reacts to the Selectboxes
+        fig2 = px.histogram(
+            filtered_df, 
+            x='age', 
+            color='tiktok_shop_experience',
+            barmode='group',
+            category_orders={'age': age_order},
+            color_discrete_sequence=px.colors.qualitative.Bold,
+            title=f'TikTok Shop Usage: {selected_gender} Group ({selected_age})'
+        )
+        
+        # Improve layout for better readability
+        fig2.update_layout(yaxis_title="Number of Respondents", xaxis_title="Age Group")
+        
+        st.plotly_chart(fig2, use_container_width=True)
+
+        # --------------------------------------------------
+        # Dynamic Interpretation for Histogram
+        # --------------------------------------------------
+        # Logic to find the peak age group in the filtered data
+        if not filtered_df.empty:
+            age_counts = filtered_df['age'].value_counts()
+            top_age = age_counts.idxmax()
+            top_age_count = age_counts.max()
+            
+            st.write(f"""
+            **Interpretation:** Based on the selected filters, the **{top_age}** age group shows the highest concentration 
+            of respondents with **{top_age_count}** entries. When analyzed alongside TikTok Shop experience, 
+            this visualization helps identify which specific age bracket within the **{selected_gender}** demographic is most active on the platform.
+            """)
     
     # 3. Monthly Income Distribution
     st.subheader("Income Distribution")
