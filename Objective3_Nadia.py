@@ -21,7 +21,7 @@ def app():
     # ==================================================
     st.markdown("""
     <h4 style='text-align: left;'>🎯 Objective</h4>
-    <p>To investigate the role of *trust*, *enjoyment*, and *motivation* in shaping users’ shopping experiences on TikTok Shop.</p>
+    <p>To investigate the role of trust, enjoyment, and motivation in shaping users’ shopping experiences on TikTok Shop.</p>
 
     <h4 style='text-align: left;'>🧩 Problem Statement</h4>
     <p>Trust and enjoyment are critical psychological factors influencing online shopping decisions. 
