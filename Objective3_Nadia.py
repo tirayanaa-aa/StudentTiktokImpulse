@@ -35,20 +35,6 @@ def app():
 
     
     # ==================================================
-    # FILTER OPTIONS
-    # ==================================================
-    st.sidebar.header("🔍 Filter Options")
-
-    if 'gender' in df.columns:
-        selected_gender = st.sidebar.multiselect(
-            "Select Gender",
-            options=df['gender'].unique(),
-            default=df['gender'].unique()
-        )
-        df = df[df['gender'].isin(selected_gender)]
-
-    
-    # ==================================================
     # DEFINE FACTORS GROUPS
     # ==================================================
     trust_items = [
@@ -159,23 +145,7 @@ def app():
     else:
         st.warning(f"Missing columns for correlation: {missing_corr}")
         
-    
-    # ==================================================
-    # INTERACTIVE TRUST ITEM SELECTION (CREATIVE FEATURE)
-    # ==================================================
-    st.markdown("### 🎛 Select Trust Items for Analysis")
-    
-    selected_trust_items = st.multiselect(
-        "Choose trust dimensions to display:",
-        options=trust_items,
-        default=trust_items
-    )
-    
-    if not selected_trust_items:
-        st.warning("Please select at least one trust item.")
-        selected_trust_items = trust_items
 
-    
     # ==================================================
     # 2️⃣ BAR CHART - TRUST ITEMS
     # ==================================================
@@ -184,17 +154,16 @@ def app():
     missing_trust = [c for c in trust_items if c not in df.columns]
     
     if not missing_trust:
-       trust_means = df[selected_trust_items].mean().reset_index()
+        trust_means = df[trust_items].mean().reset_index()
         trust_means.columns = ['Trust Item', 'Mean Score']
-        
+    
         fig2 = px.bar(
             trust_means,
             x='Trust Item',
             y='Mean Score',
-            title="Average Trust Scores (User Selected)"
+            title="Average Trust Scores"
         )
         st.plotly_chart(fig2, use_container_width=True)
-
 
         # -------------------------
         # INTERPRETATION / INSIGHTS
@@ -341,26 +310,17 @@ def app():
     # 6️⃣ RADAR CHART - TRUST DIMENSIONS
     # ==================================================
     st.markdown("### 6️⃣ Trust Dimension Radar Chart")
-    
-    # Recalculate means SAFELY for radar chart
-    radar_means = df[selected_trust_items].mean().reset_index()
-    radar_means.columns = ['Trust Item', 'Mean Score']
-    
-    labels = radar_means['Trust Item'].tolist()
-    values = radar_means['Mean Score'].tolist()
-    
-    # Complete the radar loop
-    values += values[:1]
-    angles = np.linspace(0, 2 * np.pi, len(labels) + 1)
-    
-    # Plot radar chart
-    fig6, ax = plt.subplots(figsize=(5,5), subplot_kw=dict(polar=True))
-    ax.plot(angles, values, linewidth=2)
-    ax.fill(angles, values, alpha=0.25)
-    ax.set_thetagrids(angles[:-1] * 180 / np.pi, labels)
-    
-    st.pyplot(fig6)
-
+    if not missing_trust:
+        import matplotlib.pyplot as plt
+        labels = trust_items
+        values = trust_means['Mean Score'].tolist()
+        values += values[:1]  # complete loop
+        angles = np.linspace(0, 2 * np.pi, len(labels)+1)
+        fig6, ax = plt.subplots(figsize=(5,5), subplot_kw=dict(polar=True))
+        ax.plot(angles, values, linewidth=2)
+        ax.fill(angles, values, alpha=0.25)
+        ax.set_thetagrids(angles[:-1] * 180/np.pi, labels)
+        st.pyplot(fig6)
 
          # -------------------------
         # INTERPRETATION / INSIGHTS
