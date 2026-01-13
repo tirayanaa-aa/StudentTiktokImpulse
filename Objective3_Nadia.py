@@ -263,15 +263,16 @@ def app():
             st.warning("Please select at least one trust item.")
             selected_trust_items = trust_items
     
-        # Prepare data for radar
+        # Prepare data for radar chart
         radar_df = pd.DataFrame({
             'Trust Item': selected_trust_items,
             'Average Score': df[selected_trust_items].mean().values
         })
     
-        # Complete the loop for radar chart
-        radar_df = radar_df.append(radar_df.iloc[0], ignore_index=True)
+        # Complete the loop for radar chart (replace append with concat)
+        radar_df = pd.concat([radar_df, radar_df.iloc[[0]]], ignore_index=True)
     
+        # Plot interactive radar chart
         fig_radar = px.line_polar(
             radar_df,
             r='Average Score',
@@ -280,8 +281,7 @@ def app():
             markers=True,
             title="Interactive Radar Chart of Trust Dimensions"
         )
-    
-        fig_radar.update_traces(fill='toself')  # fill area under curve
+        fig_radar.update_traces(fill='toself')
         fig_radar.update_layout(
             polar=dict(
                 radialaxis=dict(range=[0, 5], visible=True, tickvals=[1,2,3,4,5]),
