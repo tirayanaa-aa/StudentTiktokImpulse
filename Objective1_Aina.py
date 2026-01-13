@@ -51,7 +51,7 @@ def app():
         color='tiktok_shop_experience',
         barmode='group',
         category_orders={'age': age_order},
-        color_discrete_sequence=px.colors.sequential.Viridis,
+        color_discrete_sequence=px.colors.sequential.Bold,
         title='TikTok Shop Usage across Age Groups'
     )
     st.plotly_chart(fig2, use_container_width=True)
