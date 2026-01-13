@@ -3,9 +3,6 @@ import streamlit as st
 import pandas as pd
 
 
-import streamlit as st
-import pandas as pd
-import plotly.express as px
 
 def app():
     st.header("Sub-Objective 1: Analyze the Demographic Profile and TikTok Shop Usage")
@@ -39,14 +36,16 @@ def app():
     # Create two columns for the filters
     col1, col2 = st.columns(2)
 
-    faculty_col = 'faculty'
+    gender_col = 'gender'
     age_col = 'age' 
 
     with col1:
-        faculty_list = ["All"] + sorted(df[faculty_col].dropna().unique().tolist())
-        selected_faculty = st.selectbox("Select Faculty", faculty_list)
+        # Filter for Gender
+        gender_list = ["All"] + sorted(df[gender_col].dropna().unique().tolist())
+        selected_gender = st.selectbox("Select Gender", gender_list)
 
     with col2:
+        # Filter for Age Group
         age_list = ["All"] + sorted(df[age_col].dropna().unique().tolist())
         selected_age = st.selectbox("Select Age Group", age_list)
 
@@ -55,8 +54,8 @@ def app():
     # --------------------------------------------------
     filtered_df = df.copy()
 
-    if selected_faculty != "All":
-        filtered_df = filtered_df[filtered_df[faculty_col] == selected_faculty]
+    if selected_gender != "All":
+        filtered_df = filtered_df[filtered_df[gender_col] == selected_gender]
     
     if selected_age != "All":
         filtered_df = filtered_df[filtered_df[age_col] == selected_age]
@@ -67,33 +66,36 @@ def app():
     st.divider()
     
     if filtered_df.empty:
-        st.warning(f"No data found for Faculty: **{selected_faculty}** and Age: **{selected_age}**.")
+        st.warning(f"No data found for Gender: **{selected_gender}** and Age: **{selected_age}**.")
     else:
-        st.subheader("Gender Distribution Analysis")
+        st.subheader("Demographic Overview")
         
         # Prepare Pie Chart Data
-        gender_counts = filtered_df['gender'].value_counts().reset_index()
-        gender_counts.columns = ['gender', 'count']
+        # Even if one gender is selected, the chart shows the proportion relative to the filter
+        gender_counts = filtered_df[gender_col].value_counts().reset_index()
+        gender_counts.columns = [gender_col, 'count']
 
         fig1 = px.pie(
             gender_counts, 
             values='count', 
-            names='gender', 
-            title=f"Gender Distribution (Faculty: {selected_faculty} | Age: {selected_age})",
+            names=gender_col, 
+            title=f"Gender Distribution (Selected: {selected_gender} | Age: {selected_age})",
             color_discrete_sequence=px.colors.qualitative.Pastel,
             hole=0.4
         )
         st.plotly_chart(fig1, use_container_width=True)
         
         # Automated Interpretation
-        total_n = gender_counts['count'].sum()
-        top_gender = gender_counts.iloc[0]['gender']
+        total_n = len(filtered_df)
+        top_gender = gender_counts.iloc[0][gender_col]
         percentage = (gender_counts.iloc[0]['count'] / total_n) * 100
 
         st.info(f"""
-        **Interpretation:** With the current filters applied, the respondent pool 
-        is dominated by **{top_gender}s**, representing **{percentage:.1f}%** of the filtered data (**n={total_n}**). 
-        This suggests that marketing efforts for this specific subset should be tailored toward the {top_gender} demographic.
+        **Interpretation:** Under the current selection (**Gender: {selected_gender}** and **Age: {selected_age}**), 
+        the data represents a sample size of **n={total_n}**. 
+        
+        The primary group identified is **{top_gender}**, making up **{percentage:.1f}%** of this specific segment. 
+        This data helps in understanding if specific gender-age combinations show higher engagement levels on TikTok Shop.
         """)
 
 # Execute the app
