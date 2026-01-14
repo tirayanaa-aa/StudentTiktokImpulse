@@ -11,8 +11,7 @@ def app():
   st.markdown("## Sub-Objective 4: Product Presentation, Lifestyle, & Impulse Buying")
 
   with st.container():
-     st.markdown(
-        """
+     st.markdown("""
         <div style="border:1px solid #cccccc; padding:15px; border-radius:10px; background-color:#f9f9f9;">
         <h4>Objective</h4>
         <ul>
