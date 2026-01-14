@@ -44,19 +44,16 @@ def app():
         col1.metric(
             label="Average Lifestyle Score (SL)",
             value=f"{df['SL_score'].mean():.2f}",
-            delta=f"{df['SL_score'].max() - df['SL_score'].min():.2f} range"
         )
 
         col2.metric(
             label="Average Product Presentation Score (PP)",
             value=f"{df['PP_score'].mean():.2f}",
-            delta=f"{df['PP_score'].max() - df['PP_score'].min():.2f} range"
         )
 
         col3.metric(
             label="Average Impulse Buying Score (OIB)",
             value=f"{df['OIB_score'].mean():.2f}",
-            delta=f"{df['OIB_score'].max() - df['OIB_score'].min():.2f} range"
         )
 
         st.markdown("### 🔍 Descriptive Statistics")
