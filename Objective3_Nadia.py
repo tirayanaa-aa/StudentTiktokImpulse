@@ -91,6 +91,13 @@ def app():
         selected_trust_items = trust_items
 
     # ==================================================
+    # CREATE COMPOSITE SCORES
+    # ==================================================
+    df['Trust_Score'] = df[trust_items].mean(axis=1)
+    df['Motivation_Score'] = df[motivation_items].mean(axis=1)
+    df = df.dropna(subset=['Trust_Score', 'Motivation_Score'])
+
+    # ==================================================
     # SUMMARY METRICS
     # ==================================================
     st.markdown("## 📊 Summary Metrics")
@@ -111,7 +118,7 @@ def app():
 
 
         summary_df = df[metric_cols].agg(['mean','min','max']).T.round(2)
-        st.dataframe(summary_df.style.background_gradient(cmap='Blues'), height=220)
+        st.dataframe(summary_df.style.background_gradient(cmap='Blues'), height=200)
     else:
         st.warning(f"Missing columns for summary metrics: {missing_cols}")
 
