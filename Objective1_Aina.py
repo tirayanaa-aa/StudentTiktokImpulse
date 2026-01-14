@@ -84,7 +84,11 @@ def app():
         
         top_gender = gender_counts.iloc[0][gender_col]
         percentage = (gender_counts.iloc[0]['count'] / len(pie_df)) * 100
-        st.info(f"**Interpretation:** 🎯 For the **{selected_age}** group, the sample is dominated by **{top_gender}s** ({percentage:.1f}%).The pie chart reveals that the respondent pool is dominated by [Gender], representing [Percentage]% of the total. This suggests that marketing efforts should be tailored toward this specific demographic")
+       st.info(f"""
+**Interpretation:** 🎯 For the **{selected_age}** group, the sample is dominated by **{top_gender}s** ({percentage:.1f}%). 
+The pie chart reveals that the respondent pool is dominated by **{top_gender}**, representing **{percentage:.1f}%** of the total. 
+This suggests that marketing efforts should be tailored toward this specific demographic.
+""")
 
     # --------------------------------------------------
     # 2. AGE GROUP HISTOGRAM (Independent)
