@@ -299,17 +299,7 @@ def app():
             labels={'Trust_Score': 'Trust Score', 'Motivation_Score': 'Motivation Score'},
             title='Trust vs Motivation'
         )
-
-        # Scatter plot with gender coloring
-        fig5 = px.scatter(
-            df_sample,
-            x='Trust_Score',
-            y='Motivation_Score',
-            color='gender',  # Color by male/female
-            labels={'Trust_Score': 'Trust Score', 'Motivation_Score': 'Motivation Score', 'gender': 'Gender'},
-            title='Trust vs Motivation by Gender',
-            color_discrete_map={'Male': 'blue', 'Female': 'red'}  # Optional: specify colors
-        
+    
         if show_trendline:
             x = df['Trust_Score'].values
             y = df['Motivation_Score'].values
@@ -332,7 +322,6 @@ def app():
                 <li>This suggests that trust plays a supportive role in enhancing consumer motivation on TikTok Shop.</li>
             </ul>
             """, unsafe_allow_html=True)
-
 
     # ==================================================
     # 6️⃣ RADAR CHART - INTERACTIVE
