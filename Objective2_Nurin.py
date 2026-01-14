@@ -4,7 +4,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-
 def app():
 
     # --------------------------------------------------
@@ -25,62 +24,65 @@ def app():
     # --------------------------------------------------
     # Load Dataset 
     # --------------------------------------------------
-   
     df = pd.read_csv("tiktok_impulse_buying_cleaned.csv")
 
     # ==================================================
     # 1. Density Plot
     # ==================================================
     # Ensure OIB_Category is created
+    if 'OIB_Category' not in df.columns:
+        mean_oib_score = df['OIB_score'].mean()
+        df['OIB_Category'] = df['OIB_score'].apply(
+            lambda x: 'High OIB' if x >= mean_oib_score else 'Low OIB'
+        )
 
-   if 'OIB_Category' not in df.columns:
-    mean_oib_score = df['OIB_score'].mean()
-    df['OIB_Category'] = df['OIB_score'].apply(
-        lambda x: 'High OIB' if x >= mean_oib_score else 'Low OIB'
+    # Create subplots
+    fig = make_subplots(
+        rows=1,
+        cols=2,
+        subplot_titles=[
+            "Density Plot of Scarcity Score by OIB Category",
+            "Density Plot of Serendipity Score by OIB Category"
+        ]
     )
-       # Create subplots
-       fig = make_subplots(
-           rows=1,
-           cols=2,
-           subplot_titles=[
-               "Density Plot of Scarcity Score by OIB Category",
-               "Density Plot of Serendipity Score by OIB Category"
-           ]
-       )
-   # Scarcity density plot
-   fig1 = px.density_contour(
-       df,
-       x="Scarcity",
-       color="OIB_Category",
-       fill=True
-   )
 
-   for trace in fig1.data:
-    fig.add_trace(trace, row=1, col=1)
-       # Serendipity density plot
-       fig2 = px.density_contour(
-           df,
-           x="Serendipity",
-           color="OIB_Category",
-           fill=True
-       )
-for trace in fig2.data:
-    fig.add_trace(trace, row=1, col=2)
-# Update layout
-fig.update_layout(
-    height=450,
-    title_text="Density Distributions of Scarcity and Serendipity by OIB Category",
-    showlegend=True,
-    template="plotly_white"
-)
+    # Scarcity density plot
+    fig1 = px.density_contour(
+        df,
+        x="Scarcity",
+        color="OIB_Category",
+        fill=True
+    )
 
-fig.update_xaxes(title_text="Scarcity Score", row=1, col=1)
-fig.update_xaxes(title_text="Serendipity Score", row=1, col=2)
-fig.update_yaxes(title_text="Density", row=1, col=1)
-fig.update_yaxes(title_text="Density", row=1, col=2)
+    for trace in fig1.data:
+        fig.add_trace(trace, row=1, col=1)
 
-fig.show()
-    
+    # Serendipity density plot
+    fig2 = px.density_contour(
+        df,
+        x="Serendipity",
+        color="OIB_Category",
+        fill=True
+    )
+
+    for trace in fig2.data:
+        fig.add_trace(trace, row=1, col=2)
+
+    # Update layout
+    fig.update_layout(
+        height=450,
+        title_text="Density Distributions of Scarcity and Serendipity by OIB Category",
+        showlegend=True,
+        template="plotly_white"
+    )
+
+    fig.update_xaxes(title_text="Scarcity Score", row=1, col=1)
+    fig.update_xaxes(title_text="Serendipity Score", row=1, col=2)
+    fig.update_yaxes(title_text="Density", row=1, col=1)
+    fig.update_yaxes(title_text="Density", row=1, col=2)
+
+    st.plotly_chart(fig, use_container_width=True)
+
     st.write("""
     **Interpretation:**  
     - High OIB students are more sensitive to scarcity cues, with higher density at elevated scarcity scores, indicating urgency strongly drives their impulse buying.
@@ -171,7 +173,7 @@ fig.show()
     **Interpretation:**  
     - Both male and female students are influenced by scarcity and serendipity cues on TikTok Shop.
     - Scarcity scores are similar across genders, indicating equal sensitivity to urgency-based marketing.
-    - Male students show slightly higher serendipity scores, suggesting a greater tendency toward exploratory shopping behaviour
+    - Male students show slightly higher serendipity scores, suggesting a greater tendency toward exploratory shopping behaviour.
     """)
 
     # ==================================================
