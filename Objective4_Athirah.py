@@ -175,6 +175,9 @@ def app():
             color='Agreement Level',
             barmode='stack',
             title='Likert Scale Response Distribution'
+            category_orders={
+                'Agreement Level': [1, 2, 3, 4, 5]
+            }
         )
         fig3.update_layout(
             xaxis_title='Product Presentation Items',
