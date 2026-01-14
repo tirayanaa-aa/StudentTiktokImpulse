@@ -168,18 +168,19 @@ def app():
             value_name='Correlation'
         )
         corr_long.rename(columns={'index': 'Variable 1'}, inplace=True)
-
+        
         strong_corr = corr_long[
             (corr_long['Correlation'].abs() > 0.7) &
             (corr_long['Correlation'].abs() < 1)
         ]
-
+        
         strong_corr['Pair'] = strong_corr.apply(
             lambda row: '-'.join(sorted([row['Variable 1'], row['Variable 2']])),
             axis=1
         )
         strong_corr = strong_corr.drop_duplicates(subset='Pair').drop(columns='Pair')
-
+        
+        # Display strong correlation table if exists
         if not strong_corr.empty:
             st.markdown("**Strong correlations (>|0.7|):**")
             st.dataframe(
@@ -190,22 +191,20 @@ def app():
             )
         else:
             st.info("No strong correlations found above the selected threshold.")
+        
+        # -------------------------
+        # INTERPRETATION / INSIGHTS
+        # -------------------------
+        with st.expander("📌 Key Insights - Correlation Heatmap"):
+            st.markdown("""
+            <ul style="margin-left:15px;">
+                <li>Trust-related items show moderate to strong positive correlations among themselves, particularly between honesty and quality matching the product description.</li>
+                <li>Motivation factors such as discounts and gifts are also strongly correlated, showing consistent promotional influence.</li>
+                <li>Some trust items show moderate positive relationships with motivation variables, suggesting that higher trust is associated with increased shopping motivation.</li>
+                <li>Correlations between trust and motivation are generally weaker than within each construct, indicating that trust supports motivation rather than directly driving it.</li>
+            </ul>
+            """, unsafe_allow_html=True)
 
-
-            # -------------------------
-            # INTERPRETATION / INSIGHTS
-            # -------------------------
-            with st.expander("📌 Key Insights - Correlation Heatmap"):
-                st.markdown("""
-                <ul style="margin-left:15px;">
-                    <li>Trust-related items show moderate to strong positive correlations among themselves, particularly between honesty and quality matching the product description.</li>
-                    <li>Motivation factors such as discounts and gifts are also strongly correlated, showing consistent promotional influence.</li>
-                    <li>Some trust items show moderate positive relationships with motivation variables, suggesting that higher trust is associated with increased shopping motivation.</li>
-                    <li>Correlations between trust and motivation are generally weaker than within each construct, indicating that trust supports motivation rather than directly driving it.</li>
-                </ul>
-                """, unsafe_allow_html=True)
-
-    
     # ==================================================
     # 2️⃣ BAR CHART - TRUST ITEMS
     # ==================================================
