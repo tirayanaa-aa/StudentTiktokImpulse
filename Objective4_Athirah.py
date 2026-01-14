@@ -6,21 +6,39 @@ def app():
     st.subheader("Impulse Buying Analysis")
 
     
-    # ==================================================
-    # SUB-OBJECTIVE & CONTEXT
-    # ==================================================
-    st.markdown("""
-    ## Sub-Objective 4: Analyze Product Presentation, Lifestyle Factors, and Impulse Buying Behavior
-    To analyze how product appearance, personal shopping lifestyle, and impulse buying tendencies influence spontaneous purchasing behavior on TikTok Shop.
+   # ==================================================
+   # SUB-OBJECTIVE & CONTEXT (Point Style)
+   # ==================================================
+   st.markdown("## Sub-Objective 4: Product Presentation, Lifestyle, & Impulse Buying")
 
-    ### Problem Statement
-    Impulse buying is a significant outcome in social commerce platforms. However, the influence of product presentation and individual shopping lifestyle on impulse buying behavior is not always clearly understood, requiring visual analytics to uncover underlying patterns and relationships.
+   # Create a container for the “box” look
+   with st.container():
+       st.markdown(
+           """
+           <div style="border:1px solid #cccccc; padding:15px; border-radius:10px; background-color:#f9f9f9;">
+           <h4>Objective</h4>
+           <ul>
+               <li>Examine how <b>product appearance</b> influences impulse buying on TikTok Shop</li>
+               <li>Analyze the impact of <b>personal shopping lifestyle</b> on spontaneous purchases</li>
+               <li>Assess the relationship between <b>impulse buying tendencies</b> and actual purchase behavior</li>
+           </ul>
+        
+           <h4>Problem Statement</h4>
+           <ul>
+               <li>Impulse buying is significant in social commerce platforms</li>
+               <li>The influence of product presentation and shopping lifestyle is not fully understood</li>
+               <li>Visual analytics can uncover hidden patterns and relationships</li>
+           </ul>
 
-    ### Relevant Questionnaire Sections
-    - **Section 7:** Personal Shopping Lifestyle (SL)  
-    - **Section 8:** Product Appearance and Description (PP)  
-    - **Section 9:** Impulse Buying Behavior (OIB)
-    """)
+           <h4>Relevant Questionnaire Sections</h4>
+           <ul>
+               <li>Section 7: Personal Shopping Lifestyle (SL)</li>
+               <li>Section 8: Product Appearance and Description (PP)</li>
+               <li>Section 9: Impulse Buying Behavior (OIB)</li>
+           </ul>
+           </div>
+           """, unsafe_allow_html=True
+      )
 
     
     # --------------------------------------------------
