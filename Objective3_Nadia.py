@@ -300,7 +300,7 @@ def app():
             color='gender',  # color dots by gender
             labels={'Trust_Score': 'Trust Score', 'Motivation_Score': 'Motivation Score', 'gender': 'Gender'},
             title='Trust vs Motivation by Gender',
-            color_discrete_map={'Male': 'blue', 'Female': 'red'}  # optional: set custom colors
+            color_discrete_map={'Male': 'blue', 'Female': 'green'}  # optional: set custom colors
         )
     
         if show_trendline:
