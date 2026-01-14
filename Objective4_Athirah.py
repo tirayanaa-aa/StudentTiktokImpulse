@@ -174,7 +174,7 @@ def app():
             x='Item',
             color='Agreement Level',
             barmode='stack',
-            title='Likert Scale Response Distribution'
+            title='Likert Scale Response Distribution',
             category_orders={
                 'Agreement Level': [1, 2, 3, 4, 5]
             }
